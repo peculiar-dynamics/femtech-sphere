@@ -32,7 +32,7 @@ const { image,  divbg, sectionbg, items, gallery="cards", url,  ...heading } = A
     {gallery === "cards" &&(
         <div class:list={["grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 justify-items-center  gap-4  max-w-screen-2xl  w-full"]}>
             { items.map((item:any) => (
-                <Card title={item.title} content={item.content} link={item.link} />
+                <Card title={item.title} content={item.content} link={item.link} filled />
             ))}
         </div>
     )}

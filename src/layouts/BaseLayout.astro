@@ -29,7 +29,7 @@ const { class: classList, header = "transparent", type = "website", ...head } = 
 
         <BaseHead {...head} />
 	</head>
-	<body class="relative flex flex-col items-center justify-center max-w-full w-full z-0 bg-[--surface] text-[--onSurface]" >
+	<body class="relative flex flex-col items-center justify-center max-w-full w-full z-0 bg-[--primary] text-[--onSurface]" >
          <!-- Google Tag Manager (noscript) -->
         {siteInfo.cookies.GTM &&
             <noscript>
@@ -44,7 +44,7 @@ const { class: classList, header = "transparent", type = "website", ...head } = 
         
 
       
-        <main class:list={["relative z-0  flex-auto w-full max-w-full overflow-x-hidden flex  flex-col items-center justify-start  bg-[--surface] text-[--onSurface]" ]}>
+        <main class:list={["relative z-0  flex-auto w-full max-w-full overflow-x-hidden flex  flex-col items-center justify-start  bg-[--primary] text-[--onSurface]" ]}>
             <slot />
         </main>
 

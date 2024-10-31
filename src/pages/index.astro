@@ -14,6 +14,8 @@ import Signup from "~/components/sections/Signup.astro"
 import content from "~/data/content"
 
 import bannerImg from "~/assets/350x100.svg"
+import heroImage from "~/assets/cat.avif"
+import { Image } from "astro:assets"
 
 
 const services = content.services.filter((s)=> s.intro)
@@ -28,78 +30,67 @@ const items = content.partners
 
 
 <BaseLayout {title} {description} >
-	<Hero title="Simplify. Standardise. Optimise." scroll image background="gradient" link="#intro" />
-	<Banner text="Our Ecosystem of Clients, Partners and Vendors" {items} />
+	<Hero title="Femtech Sphere" scroll image  link="#intro" tagline="Lorem ipsum dolor sit amet, consectetur adipiscing elit." />
+	<Banner text="Our Ecosystem Partners and Startups" {items} />
 	<IntroBanner
-		title="Governance, Risk & Compliance Specialists"
-		subtitle="who we are"
+		title="Sed magna odio, convallis eu turpis vitae, rhoncus molestie felis."
+		subtitle="How This Works"
 		id="intro"
-		signature="Bob Loblaw"
-		signatureName="Bob Loblaw, MD"
-		bannerUrl={bannerImg}
+		
+		bg="bg-[--primaryContainer] text-[--onPrimaryContainer] rounded-md max-w-[85vw] w-[75vw] m-8 md:m-16"
 	>
 
 		<p class="font-bold md:text-left text-center w-full">
-		Risk Rising is a specialist Governance, Risk and Compliance (GRC) Consultancy. 
+			Morbi placerat consectetur nulla, vitae feugiat leo viverra eget. 
 		</p>
 		<p class=" md:text-left text-center">
-			We support our customers execute against their GRC goals, whether they be implementing technology, selecting the best fit technology or outsourcing the management of their GRC system entirely. Our team are market experts with decades of experience covering sales, technical validation and implementation making us a trusted authority within the industry.
+			Praesent iaculis nulla a commodo suscipit. Phasellus iaculis lorem ut risus dapibus, vestibulum sollicitudin tellus rutrum. Donec convallis feugiat vehicula. Duis accumsan massa et est maximus, at commodo tellus venenatis. Proin nec justo placerat dui condimentum tincidunt ut pretium libero. Nulla vestibulum ipsum eget nibh interdum, sed volutpat lectus bibendum. Quisque nec facilisis lectus.
 		</p>
 
 		<Button
-		href="/about"
-		text="About Us"
+		href="/approach"
+		text="Our Approach"
 		type="filled"
 		buttonColor=""
 		addClasses="w-fit"
 		slot="primary-button"
 		/>
 	</IntroBanner>
-	<ContentSplit title="Best-in-class Technology & Expertise" subtitle="How we help" id="services">
+	<ContentSplit title="Nullam sagittis cursus aliquet." subtitle="Ecosystem" id="ecosystem" sectionbg="text-[--onPrimary]">
 		<Fragment slot="heading">
 			<p class=" md:text-left text-center" >
-				Navigating a fast-moving threat and regulatory landscape with a dynamic GRC programme is a challenge. 
+				Nulla ut tristique magna. Donec consectetur quam massa, sagittis sagittis lorem facilisis id. Mauris quis leo ut lectus ultricies mattis sit amet semper quam. 
 			</p>
 			<p class=" md:text-left text-center" >
-				Risk Rising helps its customers identify the best fit technology solutions, successfully executes implementations and integrations of those solutions, and provides the appropriate level of aftercare support.
+				Proin euismod vel lorem posuere malesuada. Etiam consectetur consectetur lorem, at faucibus arcu cursus id. Maecenas molestie nulla eget accumsan eleifend. Etiam faucibus tempor lectus. Pellentesque sodales ligula vel felis porta facilisis.
 			</p>
 		</Fragment>
 		<!-- <Fragment slot="buttons"> -->
 			<Button
-			href="/services"
-			text="More Services"
+			href="/ecosystem"
+			text="Explore Ecosystem"
 			type="filled"
 			buttonColor=""
-			icon="mdi:google"
 			slot="buttons"
 
 			/>
-			<Button
-			href="/contact"
-			text="Contact Us"
-			type="outlined"
-			buttonColor=""
-			slot="buttons"
-			icon="mdi:google"
 
-			iconLeft
-
-			/>
 		<!-- </Fragment> -->
-		<div class="flex flex-col gap-4">
-			{ services.map((service, i) => (
+		<div class="flex flex-col gap-4 bg-[--secondaryContainer] rounded-md">
+			<!-- { services.map((service, i) => (
 				<Feature title={service.title} link={`/services#${service.id}`} bg={featureColors[i]}>
 					<p>{service.content}</p>
 				</Feature>
-			))}
+			))} -->
+			<Image src={heroImage} alt="" class="relative p-4 py-16 rounded-md  object-cover object-center" />
 		</div>
 
 	</ContentSplit>
 
-	<ContentGallery subtitle="News and resources" title="The latest in industry and in-house" items={content.blogs} gallery="cards">
+	<ContentGallery subtitle="Perspectives"  items={content.blogs} gallery="cards" sectionbg="bg-[--primaryContainer]">
 		<Button
-		href="/news"
-		text="Read More News"
+		href="/perspectives"
+		text="Read More Content"
 		type="filled"
 		buttonColor=""
 		addClasses="w-fit"
@@ -108,6 +99,6 @@ const items = content.partners
 		/>
 	</ContentGallery>
 
-	<Signup />
+	<Signup divbg="bg-[--primaryContainer] text-[--onPrimaryContainer]" sectionbg="my-16" />
 
 </BaseLayout>

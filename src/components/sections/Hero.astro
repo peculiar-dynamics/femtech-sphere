@@ -12,8 +12,8 @@ import heroImage from "~/assets/cat.avif"
 import type { ActionError } from "astro:actions";
 ---
 <section class:list={["hero relative z-10 w-full flex gap-8 items-stretch sm:justify-center justify-end  px-4 sm:px-8 text-balance pb-4 sm:pb-8 pt-32", {"h-[85svh] max-h-full": scroll}, image ? "flex-row" : "", background ==="gradient" ? "gradient" : background]}>
-    <div class:list={["sm:relative absolute inset-x-0 p-8 sm:p-0 sm:inset-y-0 inset-y-8 z-10 w-full flex flex-col max-w-screen-md justify-center p-4 sm:p-8 text-balance flex-auto", image ? "text-left" : "items-center text-center"]}>
-        <Image src={logo} alt={alt} format="avif" />
+    <div class:list={["sm:relative absolute inset-x-0 p-8 sm:p-0 sm:inset-y-0 inset-y-8 z-10 w-full flex flex-col max-w-screen-md justify-center p-4 sm:p-8 text-balance flex-auto text-[--onPrimary]", image ? "text-left" : "items-center text-center"]}>
+        <!-- <Image src={logo} alt={alt} format="avif" /> -->
         <div
         aria-roledescription="subtitle"
         class="mb-6 font-subtitle text-4xl font-black uppercase "
@@ -21,11 +21,11 @@ import type { ActionError } from "astro:actions";
             {subtitle}
         </div>
         <h1
-            class="my-2 font-serif-heading text-4xl font-semibold text-[--on-surface] lg:text-6xl"
+            class="my-2 font-title text-6xl font-semibold text-balance text-[--onPrimary] lg:text-8xl"
         >
             {title}
         </h1>
-        <p class="font-base mb-4 text-xl text-[--on-surface]">
+        <p class="font-base mb-4 text-xl text-[--tertiaryContainer]">
             {tagline}
         </p>
         <slot />

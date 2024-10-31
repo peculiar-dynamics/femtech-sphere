@@ -159,7 +159,7 @@
   }
 
   .button {
-    @apply capitalize duration-300 ease-in-out transition-all hover:underline focus:underline sm:min-w-24 rounded-sm font-medium;
+    @apply capitalize duration-300 ease-in-out transition-all hover:underline focus:underline sm:min-w-24 rounded-md font-medium;
     /* padding: 0.5rem 0.75rem;
     font-size: 1rem;
     align-items: center;
@@ -177,16 +177,16 @@
     @apply bg-[--surfaceContainerLow] text-[--primary] shadow hover:shadow-md focus:bg-primary-400/10 hover:bg-primary-400/[0.08] focus:text-primary-400;
   }
   .button.filled {
-    @apply bg-[--primary] text-[--onPrimary] hover:opacity-[0.85] hover:text-[--onPrimary] focus:opacity-[0.85]  hover:shadow;
+    @apply bg-[--tertiaryContainer] text-[--onTertiaryContainer] hover:opacity-[0.85] hover:text-[--onPrimary] focus:opacity-[0.85]  hover:shadow;
   }
   .button.tonal {
     @apply bg-[--secondaryContainer] text-[--onSecondaryContainer] hover:bg-[--primaryFixedDim];
   }
   .button.outlined {
-    @apply text-[--primary] border  border-[--outline] rounded-sm hover:bg-primary-400/[0.08];
+    @apply text-[--primary] border  border-[--outline] rounded-md hover:bg-primary-400/[0.08];
   }
   .button.outlined-filled {
-    @apply bg-[--surface] text-[--primary] dark:bg-transparent border  border-[--outline] rounded-sm hover:bg-primary-400/[0.08];
+    @apply bg-[--surface] text-[--primary] dark:bg-transparent border  border-[--outline] rounded-md hover:bg-primary-400/[0.08];
   }
 
   .elevated.disabled,
