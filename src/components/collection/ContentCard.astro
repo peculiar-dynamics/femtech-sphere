@@ -1,0 +1,70 @@
+---
+import { Icon } from "astro-icon/components";
+import { getImage } from "astro:assets";
+import { Image } from "astro:assets";
+
+import { humanize, plainify, slugify, singlify } from "~/helpers/textConverter";
+
+
+import PublicImage from "~/components/common/PublicImage.astro";
+
+const { bg, addClasses , wide, data} = Astro.props
+
+const { ...item } = data.data;
+
+const href = `/${data.collection}/${data.slug}`;
+
+
+// console.log("data", data)
+// console.log("href", href)
+
+// import image from item.image;
+---
+<article class:list={[" content-card justify-between group flex flex-col  w-full items-center justify-center gap-2  sm:pb-4", {"cursor-pointer hover:shadow-lg focus-within:shadow-lg": href}, bg , addClasses, !wide && "max-w-xl "]}>
+    <h3 class:list={[" w-full capitalize sm:pt-4 no-underline grow  flex items-center px-2", wide ? "max-w-xl sm:px-6 lg:px-8" : "sm:px-4"]}>{item.title}</h3>
+    <p class:list={["hidden sm:line-clamp-3  px-4", wide ? "max-w-xl sm:px-8 lg:px-12" : " sm:px-6"]}>
+        {item.preview || plainify(item.body)}
+    </p>
+    {href && ( 
+        <a href={href} class:list={["max-w-xl w-full inline-flex transform mt-2 items-center gap-1  capitalize text-[--primary] transition-colors duration-300  hover:text-[--secondary] group-hover:underline focus:no-underline p-2", wide ? "max-w-xl sm:px-6 lg:px-8" : "sm:px-4"]}>
+            <span class="">Read {singlify(data.collection)}</span>
+            <Icon name="mdi:arrow-right" class="h-4 w-4 font-normal text-[--primary]" aria-hidden="true" />
+        </a>
+    )}
+
+    {item.image && (
+          <PublicImage
+            class="hidden h-32 md:h-64 min-h-16 w-full  object-cover object-center sm:block order-first"
+            src={item.image}
+            alt={item.title}
+            width={445}
+            height={230}
+            format="webp"
+          />
+        )
+      }
+      
+</article>
+
+<style>
+    .content-card{
+        
+    }
+</style>
+<script>
+  document.addEventListener("astro:page-load", () => {
+    const cards = document.querySelectorAll(".content-card");
+    Array.prototype.forEach.call(cards, (card) => {
+      let down:any, up, link = card.querySelector("article a");
+      card.onmousedown = () => (down = +new Date());
+      card.onmouseup = () => {
+        up = +new Date();
+        if (up - down < 200) {
+          link.click();
+        }
+      };
+    });
+  });
+
+</script>
+

@@ -1,0 +1,23 @@
+---
+// default styles
+import "vanilla-cookieconsent/dist/cookieconsent.css";
+// custom styles
+// import "~/styles/cookies.css";
+type Props = Record<string, never>;
+---
+
+<!-- <button type="button" data-cc="show-preferencesModal"
+  >Show cookie preferences modal</button
+> -->
+<script>
+  
+  // @ts-ignore 
+  import { run, show } from "vanilla-cookieconsent";
+  import { config } from "./CookiesConfig";
+
+  run(config);
+  setTimeout(show, 3000);
+
+
+
+</script>

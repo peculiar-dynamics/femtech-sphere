@@ -1,0 +1,38 @@
+---
+
+
+import BlogCard from "~/components/collection/BlogCard.astro";
+import SectionHeading from "~/components/common/SectionHeading.astro";
+import Button from "~/components/common/Button.astro";
+
+const { subtitle, title, id, entries } = Astro.props;
+---
+
+<div
+  class="container my-4 flex w-full max-w-screen-xl flex-col items-center justify-center gap-4 py-16 sm:p-8"
+>
+  <SectionHeading subtitle={subtitle} title={title} id={id}>
+    <slot />
+  </SectionHeading>
+
+  {
+    entries.length === 0 ? (
+      <h2>No Posts - Yet!</h2>
+    ) : (
+      //   <ul class="grid max-w-xs grid-cols-1 place-items-center gap-6 sm:max-w-lg md:max-w-4xl lg:grid-cols-3">
+      <ul class="flex w-full flex-wrap items-center justify-center lg:flex-nowrap">
+        {entries.map((blog: any) => (
+          <BlogCard data={blog} />
+        ))}
+      </ul>
+    )
+  }
+  <div class="mt-4 flex w-full justify-center gap-4">
+    <Button
+      href="/blog"
+      icon="mdi:arrow-right"
+      text="Read More Posts"
+      addClasses="w-fit"
+    />
+  </div>
+</div>

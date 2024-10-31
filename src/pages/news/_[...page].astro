@@ -1,0 +1,120 @@
+---
+// utils
+import { getCollection } from "astro:content";
+import type { GetStaticPaths } from "astro";
+
+import content from "~/data/content";
+import { formatCollection } from "~/helpers/contentParser";
+
+// components
+import BaseLayout from "~/layouts/BaseLayout.astro"
+import PageHeader from "~/components/sections/PageHeader.astro";
+import SectionHeading from "~/components/common/SectionHeading.astro";
+import LatestEntries from "~/components/collection/EntriesGroup.astro";
+
+import PaginationMinimal from "~/components/common/PaginationMinimal.astro";
+
+import BlogCard from "~/components/collection/BlogCard.astro";
+import ContentCard from "~/components/collection/ContentCard.astro"
+
+import IndexSidebar from "~/components/collection/IndexSidebar.astro";
+import Signup from "~/components/sections/Signup.astro";
+
+
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const collection = "news"
+  const allEntries = await getCollection(collection);
+  const formattedPosts = formatCollection(allEntries);
+  return paginate(formattedPosts, {
+    pageSize: content.settings.indexPagination,
+    props: {
+      collection: "news"
+    }
+  });
+}) satisfies GetStaticPaths;
+
+const { page, collection } = Astro.props;
+
+const filteredPosts = page.data;
+
+
+
+const sidebarFilters = content.settings.news.newsFilters;
+const firstPath = `/${collection}`;
+const collectionFolder = `${collection}`;
+
+// const latestPosts = formatCollection( await getCollection(collection), {limit: 4})
+
+
+---
+
+<BaseLayout
+  title="Jargon-free Tech Resources for British Businesses"
+  description="Simple Tech, Big Impact: Dive into our blog packed with actionable tips, industry trends, and success stories for UK small businesses. Start your journey today!"
+  header="transparent"
+>
+  <PageHeader title="Our News" breadcrumbs gradient/>
+  <SectionHeading title="News Title" subtitle="News and resources" center addClasses="my-8">
+    <p>Congue eu consequat ac felis donec et odio. Turpis in eu mi bibendum neque egestas congue quisque. Porta nibh venenatis cras sed felis eget velit aliquet sagittis. </p>
+  </SectionHeading>
+
+  <LatestEntries {collection} />
+
+
+  <section class="max-w-screen-2xl w-full bg-yellow-200 flex flex-col items-center"     >
+    <div class="flex flex-col w-full bg-pink-100 max-w-screen-xl container p-4 sm:py-8 sm:px-6 md:px-8 gap-8">
+      <p class="font-semibold uppercase  w-full text-left ">Category Subtitle</p>
+      <h2 class="font-semibold uppercase  w-full text-left ">Category Title</h2>
+    </div>
+    { page.data.length >0 && ( 
+
+      <ol class="mb-8 w-full bg-blue-100 grid grid-cols-1 md:grid-cols-4  gap-4 md:mb-16  justify-items-stretch content-stretch px-4 lg:px-8" transition:name="news" transition:animate="slide">
+        {page.data.map((entry) => (
+              <ContentCard data={entry} />
+        ))}
+      </ol>
+
+    )}
+    {page.total > content.settings.indexPagination && (
+      <PaginationMinimal page={page} baseUrl={firstPath} />
+    )}
+  </section>
+  <!-- <section
+    id = "category"
+    class="flex grow w-full flex-col items-center justify-start my-8 px-4 md:px-8"
+    transition:name="news"
+    transition:animate="slide"
+  >
+    {
+      page.data.length > 0 && (
+        <div class="flex w-full max-w-screen-2xl flex-auto flex-wrap items-start justify-center">
+          <div class="flex min-h-full w-full flex-col lg:w-2/3 lg:basis-auto">
+            <div class="mb-8 flex w-full min-w-full flex-wrap items-stretch justify-center gap-4 md:mb-16">
+              {page.data.map((post) => (
+                <div class="flex w-full max-w-full flex-auto grow items-center justify-center sm:min-h-full sm:w-1/3 sm:max-w-sm md:basis-auto">
+                  <BlogCard data={post} />
+                </div>
+              ))}
+            </div>
+            {page.total > content.settings.indexPagination && (
+              <PaginationMinimal page={page} baseUrl={firstPath} />
+            )}
+          </div>
+
+          <IndexSidebar
+            collection={blogFolder}
+            sidebarFilters={sidebarFilters}
+          />
+        </div>
+      )
+    }
+  </section> -->
+
+    <Signup
+      subtitle="Receive Updates"
+      title="Get content, news and promotions straight to your inbox."
+    />
+
+</BaseLayout>
+<!-- add prevent scroll -->

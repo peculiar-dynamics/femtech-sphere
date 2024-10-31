@@ -1,0 +1,77 @@
+---
+import { getCollection } from "astro:content";
+import content from "~/data/content";
+
+import { Icon } from "astro-icon/components";
+
+import { getAllTaxonomy } from "~/helpers/taxonomyParser";
+import { slugify, humanize, pluralize, singlify } from "~/helpers/textConverter";
+
+// components
+import BaseLayout from "~/layouts/BaseLayout.astro"
+import PageHeader from "~/components/sections/PageHeader.astro";
+import Button from "~/components/common/Button.astro";
+import LabelCloud from "~/components/collection/LabelCloud.astro";
+
+const collection: any = Astro.url.pathname.split('/').filter(Boolean)[0]
+
+
+
+const CONTENTSETTINGS = content.settings
+export async function getStaticPaths() {
+  const filters: string[] = content.settings.news.newsFilters.map(
+    (filter) => filter.name
+  );
+  return filters.flatMap((filter) => {
+    return [
+      { 
+        params: { filter: slugify(filter) }, 
+        props: { 
+          filterName: filter 
+        } },
+    ];
+  });
+}
+
+
+const { filter } = Astro.params;
+const { filterName } = Astro.props;
+
+const categories = await getAllTaxonomy(collection, filter);
+const entries = Object.entries(categories);
+const filterPath = `/${collection}/${filter}`;
+//@ts-ignore
+const filterConfig = content.settings[collection][`${collection}Filters`].find(
+  (f: any) => f.name == filterName
+);
+---
+
+<BaseLayout title=`${humanize(singlify(collection))} ${humanize(pluralize(filter, entries.length))}`>
+  <PageHeader title=`${pluralize(filter, entries.length)}` breadcrumbs gradient />
+  <section class="flex w-full flex-col items-center justify-start">
+    <div
+      class="max-w-screen-3xl flex w-full flex-auto flex-col items-center justify-start p-4 md:p-16"
+    >
+      <aside
+        class="w-full  border border-[--font-color] bg-[--secondary-background] p-6 text-lg"
+      >
+        <!-- other filter entries -->
+        <LabelCloud
+          entries={entries}
+          path={filterPath}
+          showCount={filterConfig?.count}
+          short={filterConfig?.short}
+          slug={filterConfig?.slug}
+        />
+      </aside>
+
+      <Button
+        href={`/${collection}`}
+        text={`Back to ${collection}`}
+        icon="mdi:arrow-left"
+        buttonColor="color-primary "
+        addClasses="size-small w-fit mt-8"
+      />
+    </div>
+  </section>
+</BaseLayout>

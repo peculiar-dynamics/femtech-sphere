@@ -1,0 +1,13 @@
+---
+import siteInfo from "~/data/site-info";
+const favicon  = siteInfo.favicon;
+---
+<link rel="icon" type="image/svg+xml" href={favicon} />
+
+<script>
+	const favicon = document.querySelector('link[rel="icon"]')!
+	document.addEventListener("visibilitychange", () => {
+		const hidden = document.hidden
+		favicon.setAttribute("href", `/favicon${hidden ? "-hidden" : ""}.svg`)
+	})
+</script>

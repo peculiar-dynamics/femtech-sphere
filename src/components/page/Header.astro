@@ -1,0 +1,41 @@
+---
+
+import siteInfo from "~/data/site-info";
+
+import Navigation from './Navigation.astro';
+import Logo from './Logo.astro';
+import DarkMode from './DarkMode.astro';
+import Button from '~/components/common/Button.astro';
+
+
+export interface Props {
+	header?: "opaque" | "transparent";
+    fontColors?: string;
+}
+
+const { header = "transparent", fontColors } = Astro.props;
+---
+
+
+<header class:list={[header === "opaque" ? "shadow-lg sticky bg-[--surfaceContainer]" : "fixed gradient-header", "top-0 z-30  flex  justify-between items-center  gap-y-2 py-2 px-4 w-full max-w-full ", {"md:flex-wrap lg:flex-wrap-none ": siteInfo.pages.length>4}, header === "transparent" ? "text-white " : "text-[--onSurfaceVariant]"]}>
+    <Logo header />
+    <Navigation {header} {fontColors}  />
+    <div class="order-3 flex items-center justify-center px-2 gap-x-2 ">
+        <!-- add cta button -->
+        { siteInfo.navCta &&
+            <Button addClasses="min-[420px]:inline-flex hidden size-tiny sm:size-small" text={siteInfo.navCta.label} href={siteInfo.navCta.href} type="outlined-filled"  />
+        }
+        <DarkMode colors={fontColors} />
+    </div>
+
+</header>
+
+<style>
+    .gradient-header{
+        @apply before:content-[''] before:absolute before:inset-0 before:block before:opacity-45 dark:before:opacity-85 before:z-[-5] before-gradient backdrop-filter backdrop-blur-lg backdrop-opacity-80
+    }
+    .before-gradient{
+        @apply before:bg-gradient-to-r before:from-primary-600 before:to-primary-100 before:text-white
+    }
+</style>
+

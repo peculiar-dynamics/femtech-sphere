@@ -1,0 +1,45 @@
+---
+import SectionHeading from "~/components/common/SectionHeading.astro";
+import { Image, getImage } from "astro:assets";
+const { signatureName, signature, bannerUrl, id, bg, ...heading } =
+  Astro.props;
+---
+
+<section
+  id={id}
+  class:list={["container relative mb-32 flex min-h-[30vh] w-full max-w-screen-xl flex-col items-center justify-center gap-6 p-4 py-16 text-center sm:px-8 md:flex-row md:items-stretch md:text-left", bg]}
+>
+  <div
+    class="min-w-1/3 flex w-1/2 flex-auto flex-col items-center justify-between gap-6 md:items-start"
+  >
+    <SectionHeading {id} {...heading} />
+    <slot name="primary-button" class="" />
+  </div>
+
+  <div
+    class="mt-4 flex w-full max-w-[75ch] flex-auto flex-col items-center justify-center gap-2 text-center  md:w-2/3"
+  >
+    <slot />
+    {signature &&
+      <p class="font-handwritten text-xl md:text-3xl">{signature}</p>
+      <p>{signatureName}</p>
+    }
+
+  </div>
+  {
+    bannerUrl && (
+      <div class="absolute -bottom-32 flex h-32 w-full max-w-full ">
+        <Image
+          src={bannerUrl}
+          quality="mid"
+          format="avif"
+          alt=""
+          widths={[240, 540, 720, 1280]}
+          sizes="80vw"
+          class=" w-full object-cover object-center"
+          loading="lazy"
+        />
+      </div>
+    )
+  }
+</section>

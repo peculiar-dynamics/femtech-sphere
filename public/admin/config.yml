@@ -1,0 +1,89 @@
+backend:
+  name: git-gateway
+  branch: main # main or develop
+  squash_merges: true
+  commit_messages:
+    create: Create {{collection}} “{{slug}}”
+    update: Update {{collection}} “{{slug}}”
+    delete: Delete {{collection}} “{{slug}}”
+    uploadMedia: Upload “{{path}}”
+    deleteMedia: Delete “{{path}}”
+    openAuthoring: "{{message}}"
+
+# Site config
+
+publish_mode: editorial_workflow
+media_folder: public/assets/uploads
+public_folder: /assets/uploads
+site_url: "https://peculiardynamics.co.uk" # your site name
+display_url: "https://peculiardynamics.co.uk" # your site name if different from above
+logo_url: /assets/350x100.webp # peculiar logo branding
+slug:
+  encoding: "ascii"
+  clean_accents: true
+
+collections:
+  - name: news #singular
+    label: News #editor ui
+    label_singular: Article # for create ui
+    create: true
+    delete: true
+    format: frontmatter
+    folder: src/content/news
+    # slug: "{{slug}}-{{fields.id}}" #custom slug
+    # media_folder: "/{{media_folder}}/news/{{fields.id}}"
+    # public_folder: "{{public_folder}}/news/{{fields.id}}"
+    media_folder: "/{{media_folder}}/news/{{slug}}"
+    public_folder: "{{public_folder}}/news/{{slug}}"
+    preview_path: news/{{slug}}
+    fields:
+      # - { label: "ID", name: "id", widget: "uuid" } # if collection likely to have dupe names
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Text Preview", name: "preview", widget: "string" }
+      - {
+          label: "Author Name",
+          name: "author",
+          widget: "string",
+          default: "{{commit_author}}",
+        }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - {
+          label: "Categories",
+          name: "categories",
+          hint: "Add tags separated by a comma",
+          widget: "select",
+          multiple: true,
+          options:
+            [
+              "Building Websites",
+              "Growing Businesses",
+              "Strategy & Success",
+              "Tech & Tools",
+              "Everything Else",
+            ],
+        }
+      - {
+          label: "Tags",
+          name: "tags",
+          hint: "Add keyword tags separated by a comma",
+          widget: "list",
+          allow_add: true,
+          allow_delete: true,
+          summary: "{{fields.tag}}",
+          field:
+            { label: "Tag", name: "tag", widget: "string", default: ["blog"] },
+        }
+      - {
+          label: "Featured Image",
+          name: "image",
+          widget: "image",
+          allow_multiple: false,
+        }
+      - {
+          label: "Image Caption",
+          name: "imageAlt",
+          widget: "string",
+          required: false,
+          hint: "Add a caption if you need to describe this image to visually impaired users, otherwise, leave blank",
+        }
+      - { name: body, label: Body, widget: markdown }

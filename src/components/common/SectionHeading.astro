@@ -1,0 +1,72 @@
+---
+import { Icon } from "astro-icon/components";
+import Heading from "~/components/common/Heading.astro";
+
+export interface Props {
+  icon?: string;
+	title?: string;
+	subtitle?: string,
+  subtitleOrder?:string;
+  id?:string;
+  addClasses?: string;
+  center?:any;
+	
+}
+
+
+
+const {
+  icon,
+  subtitle,
+  subtitleOrder,
+  title,
+  center,
+  id,
+  addClasses = "w-full",
+} = Astro.props;
+
+const centering = center
+  ? "w-full items-center justify-center text-center"
+  : "w-full items-center justify-center text-center md:items-start md:text-left";
+---
+
+<div
+  class:list={["max-w-screen-xl flex flex-col sm:min-w-[20ch] gap-2 text-pretty w-full items-center justify-center", center ? " text-center" : "text-center md:items-start md:text-left", addClasses]}
+>
+  {icon && (
+      <Icon name={icon} class="text-4xl text-[--tertiary]" aria-hidden="true" />
+  )}
+
+  {subtitle && (
+      <p
+        aria-roledescription="subtitle"
+        class=" subtitle"
+      >
+        {subtitle}
+      </p>
+  )}
+  {title && ( 
+    <h1
+      class="heading relative max-w-[40ch] font-serif-heading font-semibold capitalize"
+    >
+      {
+        id ? (
+          <Heading id={id}>{title ? title : <slot name="title" />}</Heading>
+        ) : title ? (
+          title
+        ) : (
+          <slot name="title" />
+        )
+      }
+    </h1>
+  )}
+
+  <!-- only for title sub-text not content -->
+  {
+    Astro.slots.has("default") && (
+      <div class="flex w-full max-w-[50ch] flex-col gap-2 text-base sm:py-4 lg:text-lg">
+        <slot />
+      </div>
+    )
+  }
+</div>

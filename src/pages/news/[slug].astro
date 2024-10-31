@@ -1,0 +1,41 @@
+---
+import { getCollection } from "astro:content";
+
+import ArticleLayout from "~/layouts/ArticleLayout.astro";
+
+import PostHeader from "~/components/collection/PostHeader.astro";
+import Button from "~/components/common/Button.astro";
+
+// Generate a new path for every collection entry
+export async function getStaticPaths() {
+  const entries = await getCollection("news");
+  return entries.map((entry:any) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+// Get the entry directly from the prop on render
+const { entry } = Astro.props;
+// pull out the content from the collection
+const { Content } = await entry.render();
+
+---
+
+<ArticleLayout frontmatter={entry.data}>
+  <article class="w-full flex max-w-3xl flex-col items-center justify-center">
+    <PostHeader entry={entry} gradient />
+    <div class="prose prose-base py-4 dark:prose-invert">
+      <!-- {Content ? <Content /> : <Fragment set:html={entry.content || ''} />} -->
+      <Content />
+    </div>
+  </article>
+
+  <Button
+    href={`/${entry.collection}`}
+    text={`Back to ${entry.collection}`}
+    icon="mdi:arrow-left"
+    buttonColor="color-primary "
+    addClasses="size-small w-fit mt-8 "
+  />
+</ArticleLayout>

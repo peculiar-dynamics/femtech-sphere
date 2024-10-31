@@ -1,0 +1,127 @@
+---
+import content from "~/data/content"
+import { getCollection } from "astro:content";
+
+// utils
+import { formatCollection } from "~/helpers/contentParser";
+import { slugify, humanize, pluralize } from "~/helpers/textConverter";
+import { getAllTaxonomy } from "~/helpers/taxonomyParser";
+
+// components
+import BaseLayout from "~/layouts/BaseLayout.astro"
+import PaginationMinimal from "~/components/common/PaginationMinimal.astro";
+import PageHeader from "~/components/sections/PageHeader.astro";
+
+import EntriesGroup from "~/components/collection/EntriesGroup.astro";
+import BlogCard from "~/components/collection/BlogCard.astro";
+import Button from "~/components/common/Button.astro";
+import LabelCloud from "~/components/collection/LabelCloud.astro";
+// import IndexSidebar from "~/components/common/IndexSidebar.astro";
+
+interface Route {
+  params: {
+    filter: string;
+    taxonomy: string;
+  };
+  props: {
+    title: string;
+    taxonomies: string[];
+  };
+}
+
+interface Pagination {
+  data: any[]; // replace any with the actual type of the data
+}
+
+const CONTENTSETTINGS=content.settings
+const collection: any = Astro.url.pathname.split('/').filter(Boolean)[0]
+
+export async function getStaticPaths({ paginate }:any) {
+  const filters: string[] = content.settings.news.newsFilters.map(
+    (filter) => filter.name
+  );
+
+  const allEntries = await getCollection("news");
+  const filteredEntries = formatCollection(allEntries);
+
+  const paths = filters.flatMap((filter) => {
+    const taxonomies = [
+      ...new Set(allEntries.map((item: any) => item.data[filter]).flat()),
+    ];
+
+    return taxonomies.flatMap((taxonomy) => {
+      const taxonomyEntries = filteredEntries.filter((item: any) =>
+        item.data[filter].includes(taxonomy)
+      );
+
+      return paginate(taxonomyEntries, {
+        params: { filter: slugify(filter), taxonomy: slugify(taxonomy) },
+        props: {
+          filterName: filter,
+          taxonomyName: taxonomy,
+          taxonomies: taxonomies,
+        },
+        pageSize: content.settings.fullPagePagination,
+      });
+    });
+  });
+  return paths;
+}
+
+const { filter, taxonomy }: { filter: string; taxonomy: string } = Astro.params;
+const { page, filterName, taxonomyName, taxonomies } = Astro.props;
+
+
+
+const path = `/${collection}/${filter}/${taxonomy}`;
+const filterPath = `/${collection}/${filter}`;
+
+const categories = await getAllTaxonomy(collection, filter);
+const entries = Object.entries(categories);
+//@ts-ignore
+const filterConfig = content.settings[collection][`${collection}Filters`].find(
+  (f: any) => f.name == filterName
+);
+
+
+console.log(taxonomies);
+console.log("collection",collection)
+---
+
+<BaseLayout title=`${humanize(collection)} in ${humanize(taxonomyName)} `>
+  <PageHeader title={taxonomyName} breadcrumbs gradient />
+  <!-- other filter entries -->
+  <aside
+    class="mx-4 my-2 flex w-full flex-col items-center gap-1 border border-[--font-color] bg-[--secondary-background] px-6 py-4 sm:max-w-screen-md sm:flex-row md:gap-4"
+  >
+    <h3 class="w-fit min-w-32 text-lg uppercase">
+      All {pluralize(filterName)}
+    </h3>
+    <LabelCloud
+      entries={entries}
+      path={filterPath}
+      showCount={filterConfig?.count}
+      short={filterConfig?.short}
+      slug={filterConfig?.slug}
+    />
+
+  </aside>
+  <Button
+    href={`/${collection}`}
+    text={`Back to ${collection}`}
+    icon="mdi:arrow-left"
+    type="filled"
+    buttonColor=" "
+    addClasses="size-small w-fit mt-8"
+  />
+  <EntriesGroup {collection} items={page.data} filter={filterName} taxonomy={taxonomyName}  />
+  {
+    page.total > content.settings.indexPagination && (
+      <PaginationMinimal page={page} baseUrl={path} />
+    )
+  }
+
+        <!-- sidebar -->
+      <!-- <IndexSidebar collection={blogFolder} sidebarFilters={sidebarFilters} /> -->
+
+</BaseLayout>

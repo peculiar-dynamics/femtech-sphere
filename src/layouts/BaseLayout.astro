@@ -1,0 +1,55 @@
+---
+
+import "~/styles/tailwind.css";
+import siteInfo from "~/data/site-info";
+
+import BaseHead, { type Props as HeadProps }  from "~/components/page/BaseHead.astro";
+import SkipLink from "~/components/common/SkipLink.astro";
+import Header, { type Props as HeaderProps } from "~/components/page/Header.astro";
+import Footer from "~/components/page/Footer.astro";
+import Cookies from "~/components/cookies/Cookies.astro";
+
+interface Props extends HeadProps, HeaderProps {
+	class?: string;
+    type?: string;
+}
+
+const { class: classList, header = "transparent", type = "website", ...head } = Astro.props;
+
+// console.log(siteInfo.cookies.GTM)
+
+---
+
+<html 
+    dir="ltr"
+    lang="en"
+
+    >
+	<head>
+
+        <BaseHead {...head} />
+	</head>
+	<body class="relative flex flex-col items-center justify-center max-w-full w-full z-0 bg-[--surface] text-[--onSurface]" >
+         <!-- Google Tag Manager (noscript) -->
+        {siteInfo.cookies.GTM &&
+            <noscript>
+                <iframe src={`https://www.googletagmanager.com/ns.html?id=${siteInfo.cookies.GTM}`} height="0" width="0" style="display:none;visibility:hidden"></iframe>
+            </noscript>
+        }
+
+        <SkipLink />
+
+
+        <Header {header} fontColors="text-white hover:text-[--onSurface] hover:bg-[--surfaceContainer]"/>
+        
+
+      
+        <main class:list={["relative z-0  flex-auto w-full max-w-full overflow-x-hidden flex  flex-col items-center justify-start  bg-[--surface] text-[--onSurface]" ]}>
+            <slot />
+        </main>
+
+        <Footer />
+        <Cookies />
+
+	</body>
+</html>

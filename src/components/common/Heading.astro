@@ -1,0 +1,44 @@
+---
+import { Icon } from "astro-icon/components";
+const { "aria-label": ariaLabel, id, text } = Astro.props;
+
+const path = Astro.url.href;
+const href = `${path}#${id}`;
+---
+
+<span {id} class="heading relative">
+  {text ? text : <slot />}
+
+  <a aria-label={id + " anchor link"} {href} class="absolute -left-6 top-3">
+    <span class="anchor-link">
+      <Icon name="mdi:link-variant" class="text-lg" aria-hidden="true" />
+    </span>
+  </a>
+</span>
+
+
+<style lang="css">
+  .anchor-link {
+    visibility: hidden;
+  }
+
+  .heading {
+    display: inline-flex;
+    flex-direction: row-reverse;
+    gap: 0.5rem;
+    align-items: center;
+    scroll-margin-top: 10rem;
+    position: relative;
+  }
+
+
+  .heading:focus .anchor-link,
+  .heading:hover .anchor-link,
+  .heading:focus-within .anchor-link,
+  .heading:focus-visible {
+    visibility: visible;
+  }
+  .anchor-link:focus-visible {
+    color: inherit;
+  }
+</style>

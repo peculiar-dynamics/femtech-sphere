@@ -1,0 +1,24 @@
+---
+import SectionHeading from "~/components/common/SectionHeading.astro";
+
+const {subtitle, title, content} = Astro.props
+---
+
+<section class="max-w-2xl bg-white flex flex-col gap-4 items-center justify-center text-center p-8 md:p-16">
+    {title && (
+        <h1
+          aria-roledescription="subtitle"
+          class="font-subtitle text-base font-semibold uppercase text-[--primary] max-w-[40ch] underline decoration-[--action-color] decoration-4 underline-offset-8"
+        >
+          {title}
+        </h1>
+    )}
+    {subtitle ? (
+        <p aria-roledescription="subtitle" class="font-semibold capitalize text-xl md:text-2xl">{subtitle}</p>
+        <p class="max-w-[50ch] text-base lg:text-lg">{content}</p>
+    ) : (
+        <slot name="content" />
+    )
+}
+
+</section>

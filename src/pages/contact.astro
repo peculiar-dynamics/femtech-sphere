@@ -1,0 +1,43 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro"
+import PageHeader from "~/components/sections/PageHeader.astro"
+
+import ContentSplit from "~/components/sections/ContentSplit.astro"
+import Feature from "~/components/common/Feature.astro"
+import InlineEmail from "~/components/common/InlineEmail.astro"
+import Socials from "~/components/common/Socials.astro"
+import ContactMessageNetlify from "~/components/react/ContactMessageNetlify"
+
+const title = "Contact"
+const description = "Contact description"
+---
+<BaseLayout {title} {description} header="transparent">
+    <PageHeader {title} gradient/>
+
+    <div class="max-w-screen-lg flex w-full">
+        <ContentSplit title="" subtitle="Get In Touch" id="contact" addClasses="h-full ">
+                <Fragment slot="heading">
+        
+                    <Feature title="Email Us">
+                        <InlineEmail />
+                    </Feature>
+                    <Feature title="Find us Online">
+                        <Socials/>
+                    </Feature>
+                
+                </Fragment>
+        
+        
+            <div class="flex h-full max-w-lg w-full flex-none flex-col  items-center justify-center bg-blue-200 p-4 shadow sm:p-6 lg:max-w-5xl lg:p-8 lg:py-14">
+                <p
+                aria-roledescription="subtitle"
+                class="font-subtitle text-base font-semibold uppercase text-[--primary] text-left w-full mb-8">
+                    Send us a message
+                </p>
+                <ContactMessageNetlify client:only="react" />
+            </div>
+        
+        </ContentSplit>
+    </div>
+
+</BaseLayout>

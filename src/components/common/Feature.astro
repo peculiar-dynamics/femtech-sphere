@@ -1,0 +1,53 @@
+---
+import { Icon } from "astro-icon/components";
+const {icon, iconSize,  title, link, bg, content,  addClasses} = Astro.props
+---
+<article class:list={["feature group flex flex-col gap-2 py-4 shrink max-w-[60ch] w-full grow rounded-sm", {"cursor-pointer hover:shadow-lg focus-within:shadow-lg": link}, bg , addClasses]}>
+
+    <h2 class="px-2 sm:px-4 w-full uppercase pt-6 no-underline flex flex-col gap-2">
+      {title}
+      {icon && (
+            <Icon name={icon} class:list={[ iconSize ? `${iconSize}` : "text-6xl", "order-first"]} aria-hidden="true" />
+        )}
+    </h2>
+    {content && (
+      <div class="px-4 sm:px-6" set:html={content}></div>
+    )}
+    { Astro.slots.has("default") && ( 
+      <div class="px-4 sm:px-6 flex flex-col gap-2 items-center w-full justify-center md:items-start">
+        <slot />
+      </div>
+    )}
+
+    {
+        link && (
+            <a
+            href={link}
+            class:list={["text-btn ml-1 pl-3 pr-2 text-base group-hover:underline focus:no-underline " ]}
+            >
+            <span class="">read more</span>
+            <Icon
+                name="mdi:arrow-right"
+                class="text-lg font-normal "
+                aria-hidden="true"
+            />
+            </a>
+        )
+      }
+</article>
+<script>
+  document.addEventListener("astro:page-load", () => {
+    const features = document.querySelectorAll(".feature");
+    Array.prototype.forEach.call(features, (feature) => {
+      let down:any, up, link = feature.querySelector("article a");
+      feature.onmousedown = () => (down = +new Date());
+      feature.onmouseup = () => {
+        up = +new Date();
+        if (up - down < 200) {
+          link.click();
+        }
+      };
+    });
+  });
+
+</script>

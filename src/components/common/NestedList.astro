@@ -1,0 +1,41 @@
+---
+const { items } = Astro.props
+---
+
+<ul class="nested-list">
+    {items.map((item: any) => (
+      <li>
+        { item.children ? (
+            (item.href ? (
+                <a class="footer-link" href={item.href}>
+                    {item.key}
+                </a>
+                <Astro.self items={item.children} />
+                ) : (
+                  <>{item}</>
+                  <Astro.self items={item.children} />
+                )
+            )
+        
+            
+        ) :
+        (item.href ? (
+                <a class="footer-link" href={item.href}>
+                    {item.key}
+                </a>
+            ) :
+            (
+                item
+            )
+        )}
+            {/* <span class="">{item.key}</span>
+            {item.children && (
+                <span class="font-bold">{item.key}</span>
+                <Astro.self items={item.children} />
+                ) 
+                
+            } */}
+
+      </li>
+    ))}
+  </ul>

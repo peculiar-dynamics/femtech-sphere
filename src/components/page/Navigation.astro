@@ -1,0 +1,289 @@
+---
+import siteInfo from "~/data/site-info";
+import { Icon } from "astro-icon/components";
+import ResponsiveToggle from "./ResponsiveToggle.astro";
+
+const {header, fontColors} = Astro.props
+
+
+
+---
+<nav aria-label="Primary" id="main-nav" class:list={[
+    "md:pb-2 lg:pb-0 flex-auto max-w-full lg:max-w-2/3 flex container items-center gap-2  min-w-fit justify-end order-2  ",  
+    {"md:order-last lg:order-2 lg:w-fit ": siteInfo.pages.length>4}
+    ]}>
+    <ul id="nav-expanded" class:list={[ " gap-1 hidden  relative md:flex items-center text-base font-medium   whitespace-nowrap "
+        ]} aria-expanded="false" tabindex="-1" >
+
+        {
+          siteInfo.pages.map((page) => (
+            <li
+              class:list={[
+                "menu-item relative flex flex-col items-center justify-center  w-full",
+                { "has-dropdown": page?.children && page.children.length > 0 }
+              ]}
+              tabindex="-1"
+            >
+
+              {page.children ? (
+                <button
+                  class:list={[
+                    "nav-button",
+                    "flex gap-1 items-center justify-center relative  px-3 py-2  w-full",
+                    { "is-active": Astro.url.pathname === page.href },
+                  ]}
+                  aria-current={Astro.url.pathname === page.href ? 'page' : null}
+                  aria-expanded="false"
+
+                  data-dropdown-button
+                  aria-controls={`${page.key}_menu`}
+                  tabindex="0"
+                >
+                  <span class="max-w-72 min-w-28 w-full relative inline-flex items-center justify-center gap-2 leading-6">
+                    {page.key}
+                    <Icon name="ph:caret-down-light" class="h-6 w-6 absolute right-0 sm:relative " aria-hidden="true" />
+                  </span>
+                                   
+                </button>
+
+                <ul id={`${page.key}_menu`} class:list={[ "hidden nav-drop-ul  sm:absolute flex-col sm:top-12  z-40 w-full min-w-64 sm:shadow-xl py-2 sm:mt-0 sm:py-4 ", "bg-[--surfaceContainer]" ]}  aria-label={`${page.key} menu`} aria-expanded="false" >
+                  {page.children.map((child) => (
+                    <li class="submenu-item  flex w-full "  >
+                      <a href={child.href} class="nav-li-link nav-drop-link w-full px-3 py-2" tabindex="0">
+                        {child.key}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <a
+                  href={page.href}
+                  class:list={[
+                    "nav-li-link px-3 py-2 leading-6 ",
+                    { "is-active": Astro.url.pathname === page.href },
+                  ]}
+                  aria-current={Astro.url.pathname === page.href ? 'page' : null}
+                >
+                  {page.key}
+                </a>
+              )
+            }
+            </li>
+          ))
+        }
+
+    </ul>
+
+
+    <ResponsiveToggle colors="text-white hover:text-[--onSurface] hover:bg-[--surfaceContainer]" />
+</nav>
+
+<script>
+    
+    // variables
+    const mainNav = document.querySelector("#main-nav");
+    const hamburger = document.querySelector('[data-hamburger-button]');
+    const mainMenu = document.querySelector("#nav-expanded");
+    const dropdownMenus = document.querySelectorAll('[data-dropdown-button]');
+    const menuItems = document.querySelectorAll(".menu-item");
+    const submenuItems = document.querySelectorAll(".submenu-item")
+
+      // // functions
+
+      const toggleMainMenu = (e: any) => {
+        e.stopPropagation();
+        const target = document.querySelector('[data-hamburger-button]')
+
+        if (target?.getAttribute("aria-expanded") === "false") {
+
+          openDropdownMenu(target);
+          hideOnClickOutside(mainMenu);
+
+        } else {
+
+          closeDropdownMenu(target);
+        }
+      }
+
+      // handle dropdown
+      const toggleDropdownMenu = (event: any) => {
+        
+        // console.log("dd clicked")
+        event.stopPropagation();
+        const target = event.target.closest('[data-dropdown-button]')
+        // console.log(target)
+        if (target.getAttribute("aria-expanded") === "false") {
+          // console.log("toggle dd open")
+          closeAllDropdownMenus();
+          openDropdownMenu(target);
+          hideOnClickOutside(mainMenu);
+        } else {
+          // console.log("toggle dd close")
+          closeDropdownMenu(target);
+        }
+      };
+
+      const openDropdownMenu = (dropdownBtn: any) => {
+        const dropdownList = dropdownBtn.parentNode.querySelector("ul");
+        
+        dropdownList.classList.remove("hidden");
+        dropdownList.classList.add("flex","dd-container");
+        dropdownList.setAttribute("aria-expanded", "true");
+        dropdownBtn.setAttribute("aria-expanded", "true");
+
+
+        // if dd is a nested menu
+        if (dropdownList.classList.contains('nav-drop-ul')){
+          // console.log("submenu open")
+          const img = dropdownBtn.querySelector("svg")
+          img.style.transform = "rotate(180deg)"
+          dropdownBtn.setAttribute("aria-label", "Close dropdown menu");
+        }
+
+        // if dd is hamburger
+        if (dropdownList === mainMenu && hamburger) {
+          hamburger.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"     class="h-6 w-6"><path fill="currentColor" d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z"/></svg>`;
+          hamburger.setAttribute("aria-label", "Close navigation menu");
+        }
+
+      };
+
+      const closeDropdownMenu = (dropdownBtn: any) => {
+        // console.log(dropdownMenu)
+        const dropdownList = dropdownBtn.parentNode.querySelector("ul");
+
+        dropdownList.classList.add("hidden");
+        dropdownList.classList.remove("flex","dd-container");
+        dropdownList.setAttribute("aria-expanded", "false");
+        dropdownBtn.setAttribute("aria-expanded", "false");
+
+
+        if (dropdownList.classList.contains('nav-drop-ul')){
+          // console.log("submenu close")
+          const img = dropdownBtn.querySelector("svg")
+          img.style.transform = "rotate(0deg)"
+          dropdownBtn.setAttribute("aria-label", "Open dropdown menu");
+
+        }
+
+        if (dropdownList === mainMenu && hamburger) {
+          hamburger.innerHTML =`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"     class="h-6 w-6"><path fill="currentColor" d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>`
+          hamburger.setAttribute("aria-label", "Open navigation menu");
+        }
+      };
+
+      const closeAllDropdownMenus = () => {
+        for (let i = 0; i < dropdownMenus.length; i++) {
+          closeDropdownMenu(dropdownMenus[i]);
+        }
+
+      };
+      
+      // listen for outside click or page resize
+      function hideOnClickOutside(element: any){
+
+
+          const outsideCLickListener = (event: any) => {
+            if (hamburger?.getAttribute("aria-expanded") === "true") {
+              if (
+                  !element.contains(event.target) && mainMenu?.getAttribute("aria-expanded") === "true" 
+                ) {
+                  // console.log("closing hamburg")
+                closeAllDropdownMenus();
+                closeDropdownMenu(hamburger);
+                removeClickListener();
+              }
+            } else if ( !element.contains(event.target) && mainMenu?.classList.contains("hidden") ) {
+                // console.log("closing hidden")
+                closeAllDropdownMenus();
+                closeDropdownMenu(hamburger);
+                removeClickListener();
+            } else {
+              console.log("click registered - no action")
+            }
+            
+
+          }
+          const resizeListener = () => {
+            closeAllDropdownMenus();
+            closeDropdownMenu(hamburger);
+            removeClickListener();
+          }
+
+          const removeClickListener = () => {
+            document.removeEventListener('click', outsideCLickListener);
+            window.removeEventListener("resize", resizeListener);
+          }
+          document.addEventListener('click', outsideCLickListener);
+          window.addEventListener("resize",resizeListener);
+          // console.log("listener added")
+      }
+      
+      // add event listeners and page load for view transitions
+      
+      document.addEventListener('astro:page-load', (event) => {      
+        event.stopPropagation();
+        document.querySelectorAll('[data-dropdown-button]')?.forEach((dropdownMenu) => {
+          dropdownMenu.addEventListener("click", (e) => { 
+            toggleDropdownMenu(e);
+          });
+        });
+      });
+
+      document.addEventListener('astro:page-load', (event) => {
+        event.stopPropagation();
+        document.querySelector('[data-hamburger-button]')?.addEventListener('click', (e) => {
+          toggleMainMenu(e);
+        });
+      });
+
+
+
+
+
+</script>
+
+<style lang="css">
+    .scrolled {
+      @apply bg-black
+    }
+
+    .is-active{
+      text-decoration: underline;
+      text-decoration-color: var(--tertiary);
+      text-decoration-style: solid;
+      text-decoration-thickness: 4px;
+      font-weight: 600;
+      font-size: 1.125rem;
+    }
+    a:hover, a:focus, .nav-button:hover, .nav-button:focus {
+      /* @apply   bg-pink-300/[0.08] */
+      
+    }
+    a:hover,
+      a:focus,
+      .is-active,
+      .has-dropdown > button:hover,
+      .has-dropdown > button:focus {
+        text-decoration: underline;
+        text-decoration-thickness: 1px;
+        /* text-decoration-style: wavy; */
+        text-underline-offset: 4px;
+      }
+      .dd-container {
+        @apply   text-[--onSurface] bg-opacity-100  origin-top-right rounded-sm 
+        
+      }
+      .nav-drop-ul {
+        @apply sm:max-w-72 sm:min-w-28 w-full sm:w-64
+      }
+      .dd-container#nav-expanded{
+        @apply  absolute text-center shadow-xl flex-col sm:flex-row  md:items-stretch justify-around  w-[95vw] right-0 left-0 mx-auto top-16 mt-6 py-2 sm:px-2 z-30 bg-[--surface] ;
+      }
+      .dd-container > li:hover,  .dd-container > li:focus-within {
+        @apply   bg-onSurface/[0.08] text-[--onSurfaceVariant]
+      }
+
+
+
+  </style>

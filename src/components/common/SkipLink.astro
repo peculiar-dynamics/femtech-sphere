@@ -1,0 +1,35 @@
+<a
+	href="#main"
+	class="skip-link button top-20 left-4 z-50 mt-3 bg-white font-bold text-gray-700 outline outline-[3px] outline-offset-0 outline-indigo-400 p-4 drop-shadow-2xl" aria-label="skip to main content"
+>
+	Skip to main content
+</a>
+
+<style>
+	/* .skip-link {
+		left: calc(50% - 100px);
+		position: absolute;
+		transform: translateY(-200%);
+		transition: none;
+	}
+
+	.skip-link:focus {
+		transform: translateY(0);
+	} */
+    .skip-link {
+        clip: rect(1px, 1px, 1px, 1px);
+        height: 1px;
+        overflow: hidden;
+        position: absolute;
+        white-space: nowrap;
+        width: 1px;
+    }
+
+    .skip-link:focus {
+        clip: auto;
+        height: auto;
+        overflow: auto;
+        position: absolute;
+        width: auto;
+    }
+</style>

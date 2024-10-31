@@ -1,0 +1,58 @@
+---
+// utils
+import { getCollection } from "astro:content";
+import type { GetStaticPaths } from "astro";
+
+import content from "~/data/content";
+import { formatCollection } from "~/helpers/contentParser";
+import { slugify, humanize } from "~/helpers/textConverter";
+
+// components
+import BaseLayout from "~/layouts/BaseLayout.astro"
+import PageHeader from "~/components/sections/PageHeader.astro";
+import SectionHeading from "~/components/common/SectionHeading.astro";
+import EntriesGroup from "~/components/collection/EntriesGroup.astro";
+
+
+
+import IndexSidebar from "~/components/collection/IndexSidebar.astro";
+import Signup from "~/components/sections/Signup.astro";
+
+
+
+
+
+
+
+const collection = "news"
+
+const sidebarFilters = content.settings.news.newsFilters;
+const firstPath = `/${collection}`;
+const collectionFolder = `${collection}`;
+
+const latestPosts = formatCollection( await getCollection(collection), {limit: 4})
+
+
+---
+
+<BaseLayout
+  title="Jargon-free Tech Resources for British Businesses"
+  description="Simple Tech, Big Impact: Dive into our blog packed with actionable tips, industry trends, and success stories for UK small businesses. Start your journey today!"
+  header="transparent"
+>
+  <PageHeader title="Our News" breadcrumbs gradient/>
+  <SectionHeading title="News Title" subtitle="News and resources" center addClasses="my-8">
+    <p>Congue eu consequat ac felis donec et odio. Turpis in eu mi bibendum neque egestas congue quisque. Porta nibh venenatis cras sed felis eget velit aliquet sagittis. </p>
+  </SectionHeading>
+
+  <EntriesGroup {collection} latest />
+  <EntriesGroup {collection} filter={"categories"} taxonomy={"Growing Businesses"} readMore />
+
+
+    <Signup
+      subtitle="Receive Updates"
+      title="Get content, news and promotions straight to your inbox."
+    />
+
+</BaseLayout>
+<!-- add prevent scroll -->

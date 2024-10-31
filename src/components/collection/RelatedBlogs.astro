@@ -1,0 +1,12 @@
+---
+import { formatCollection } from "~/helpers/contentParser";
+import { getCollection } from "astro:content";
+
+const { entry, filters } = Astro.props;
+
+const entries = await getCollection("news", ({ data }:any) => {
+  return data;
+});
+
+const formattedPosts = formatCollection(entries, { limit: 3 });
+---

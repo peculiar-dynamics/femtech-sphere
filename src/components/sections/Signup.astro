@@ -1,0 +1,16 @@
+---
+import SectionHeading from "~/components/common/SectionHeading.astro";
+import InlineEmailNetlify from "~/components/react/InlineEmailNetlify";
+
+const {addClasses, subtitle = "Keep in Touch", title="Receive News and Updates from us", sectionbg="bg-[--surfaceContainerLowest]", divbg} = Astro.props
+---
+
+<section class:list={["w-full flex items-center justify-center", sectionbg]}>
+    <div class:list={["container  flex flex-col md:flex-row  max-w-screen-xl items-center justify-center md:justify-between p-4 sm:py-8 sm:px-6 md:px-8 gap-8 ", divbg]}>
+
+        <SectionHeading {addClasses} {subtitle} {title}/>
+
+        <InlineEmailNetlify client:only="react" />
+
+    </div>
+</section>

@@ -1,0 +1,30 @@
+---
+import {Icon} from "astro-icon/components"
+import siteInfo from "~/data/site-info";
+import type { SocialLink } from "~/data/site-info";
+
+import ExternalLink from "~/components/common/ExternalLink.astro"
+
+export type Props = {
+    background?: string;
+    textSize?: string;
+    addClass?: string;
+    links?: SocialLink[];
+}
+
+
+const { background, textSize= "text-4xl", addClass, links=siteInfo.socialLinks.filter(link => link.active) } = Astro.props
+
+---
+
+<!-- socials -->
+
+<div class:list={["flex ", `${addClass}`]}>
+    { links.map( social => (
+
+        <ExternalLink class={`flex items-center justify-center w-fit min-w-fit text-inherit transition-colors duration-300 hover:text-[--action-color-state] rounded-full ${background} ${textSize}`} href={social.href}>
+            <span class="sr-only">{`link to ${siteInfo.name} on ${social.platform}`}</span>
+            <Icon name={social.icon} class="flex items-center justify-center rounded-full p-1" aria-hidden="true"/>
+        </ExternalLink>
+    ) ) }
+</div>

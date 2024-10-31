@@ -1,0 +1,17 @@
+---
+import { Icon } from "astro-icon/components";
+
+const {icon="ph:arrow-down", link="#content", large} = Astro.props
+---
+<a
+	href={link}
+	class="absolute bottom-6 left-6 " aria-label="skip to main content"
+>
+
+    <Icon
+    name={icon}
+    aria-hidden="true"
+    class:list={["flex-none ", large ? "text-4xl sm:text-6xl" : "text-xl md:text-2xl"]}
+    />
+
+</a>

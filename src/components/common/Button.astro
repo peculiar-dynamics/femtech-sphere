@@ -1,0 +1,29 @@
+---
+import { Icon } from "astro-icon/components";
+
+const {
+  icon = null,
+  iconLeft,
+  text = "Text",
+  href,
+  buttonColor = "",
+  type="tonal",
+  addClasses = "w-full",
+} = Astro.props;
+---
+
+    <a
+      class:list={[type, " button whitespace-nowrap flex justify-center items-center gap-2 py-2", { "px-6": !icon}, {"  px-4 pl-6": icon && !iconLeft} , iconLeft  && "px-6 pl-4  ",  addClasses]}
+      {href}
+    >
+      {text}
+      {icon &&
+        <Icon
+          name={icon}
+          aria-hidden="true"
+          class:list={["flex-none text-lg ", iconLeft && "order-first" ]}
+        />
+      }
+
+    </a>
+

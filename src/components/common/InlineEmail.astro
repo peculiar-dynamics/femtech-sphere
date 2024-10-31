@@ -1,0 +1,43 @@
+---
+import siteInfo from "~/data/site-info";
+
+interface Props {
+  email?: string;
+  subject?: string;
+  addClasses?: string;
+}
+
+const { email=siteInfo.email.defaultContact, subject = siteInfo.email.defaultSubject, addClasses } = Astro.props;
+const emailSplit = email.split("@");
+const encoded = btoa(email);
+// console.log("email split",emailSplit);
+// console.log("encoded", encoded);
+---
+
+<a
+  class={`email-link inline-block w-fit ${addClasses}`}
+  href=""
+  aria-label="send us an email"
+  data-encoded={encoded}
+  data-subject={subject}
+>
+  <!-- see global styles for hidden css -->
+  <span>{emailSplit[0]}@<b class="antispam">ANTISPAM</b>{emailSplit[1]}</span>
+</a>
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+    const emails: NodeListOf<HTMLLinkElement> = document.querySelectorAll(".email-link");
+    emails.forEach((e: HTMLLinkElement) => {
+      const encoded: string | undefined = e.dataset.encoded;
+      const subject: string | undefined = e.dataset.subject;
+        // @ts-ignore 
+      e.setAttribute("href", `mailto:${atob(encoded)}?subject=${subject}`);
+    });
+  });
+</script>
+<style>
+  .email-link .antispam {
+    display: none;
+  }
+</style>

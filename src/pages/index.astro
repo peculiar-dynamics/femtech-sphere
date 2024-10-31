@@ -1,0 +1,113 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro"
+
+import Hero from "~/components/sections/Hero.astro"
+import Banner from "~/components/sections/Banner.astro"
+import IntroBanner from "~/components/sections/IntroBanner.astro"
+import Button from "~/components/common/Button.astro"
+import ContentSplit from "~/components/sections/ContentSplit.astro"
+import ContentGallery from "~/components/sections/ContentGallery.astro"
+import Feature from "~/components/common/Feature.astro"
+import Card from "~/components/common/Card.astro"
+import Signup from "~/components/sections/Signup.astro"
+
+import content from "~/data/content"
+
+import bannerImg from "~/assets/350x100.svg"
+
+
+const services = content.services.filter((s)=> s.intro)
+const featureColors=["primaryFill", "primaryContainer", "primaryFixed"]
+
+const title="Home title"
+const description = "Home desc"
+
+const items = content.partners
+
+---
+
+
+<BaseLayout {title} {description} >
+	<Hero title="Simplify. Standardise. Optimise." scroll image background="gradient" link="#intro" />
+	<Banner text="Our Ecosystem of Clients, Partners and Vendors" {items} />
+	<IntroBanner
+		title="Governance, Risk & Compliance Specialists"
+		subtitle="who we are"
+		id="intro"
+		signature="Bob Loblaw"
+		signatureName="Bob Loblaw, MD"
+		bannerUrl={bannerImg}
+	>
+
+		<p class="font-bold md:text-left text-center w-full">
+		Risk Rising is a specialist Governance, Risk and Compliance (GRC) Consultancy. 
+		</p>
+		<p class=" md:text-left text-center">
+			We support our customers execute against their GRC goals, whether they be implementing technology, selecting the best fit technology or outsourcing the management of their GRC system entirely. Our team are market experts with decades of experience covering sales, technical validation and implementation making us a trusted authority within the industry.
+		</p>
+
+		<Button
+		href="/about"
+		text="About Us"
+		type="filled"
+		buttonColor=""
+		addClasses="w-fit"
+		slot="primary-button"
+		/>
+	</IntroBanner>
+	<ContentSplit title="Best-in-class Technology & Expertise" subtitle="How we help" id="services">
+		<Fragment slot="heading">
+			<p class=" md:text-left text-center" >
+				Navigating a fast-moving threat and regulatory landscape with a dynamic GRC programme is a challenge. 
+			</p>
+			<p class=" md:text-left text-center" >
+				Risk Rising helps its customers identify the best fit technology solutions, successfully executes implementations and integrations of those solutions, and provides the appropriate level of aftercare support.
+			</p>
+		</Fragment>
+		<!-- <Fragment slot="buttons"> -->
+			<Button
+			href="/services"
+			text="More Services"
+			type="filled"
+			buttonColor=""
+			icon="mdi:google"
+			slot="buttons"
+
+			/>
+			<Button
+			href="/contact"
+			text="Contact Us"
+			type="outlined"
+			buttonColor=""
+			slot="buttons"
+			icon="mdi:google"
+
+			iconLeft
+
+			/>
+		<!-- </Fragment> -->
+		<div class="flex flex-col gap-4">
+			{ services.map((service, i) => (
+				<Feature title={service.title} link={`/services#${service.id}`} bg={featureColors[i]}>
+					<p>{service.content}</p>
+				</Feature>
+			))}
+		</div>
+
+	</ContentSplit>
+
+	<ContentGallery subtitle="News and resources" title="The latest in industry and in-house" items={content.blogs} gallery="cards">
+		<Button
+		href="/news"
+		text="Read More News"
+		type="filled"
+		buttonColor=""
+		addClasses="w-fit"
+		slot="buttons"
+
+		/>
+	</ContentGallery>
+
+	<Signup />
+
+</BaseLayout>

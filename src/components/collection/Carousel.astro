@@ -1,0 +1,51 @@
+---
+import { Icon } from "astro-icon/components";
+import ContentCard from "~/components/collection/ContentCard.astro"
+
+const {items} = Astro.props
+
+
+console.log(items)
+---
+
+<div id="carousel-dialog" aria-hidden="true" class="carousel" aria-label="Carousel">
+  <div class="carousel__overlay" data-a11y-dialog-hide></div>
+  
+  <div id="carousel" role="document">
+    <button
+      type="button"
+      id="closeButton"
+      class="carousel__button carousel__close"
+      aria-label="Close carousel"
+    >
+    <Icon name="ph:x" class="carousel__svg"  />
+    </button>
+
+    <div id="carousel__wrapper" class="carousel__wrapper">
+      <div class="carousel__main">
+        <!-- Prev Link -->
+        <a
+          class="carousel__button carousel__button--arrow"
+          aria-label="Go to previous photo"
+          id="prevLink"
+        >
+        <Icon name="ph:caret-left" class="carousel__svg"  />
+        </a>
+
+        <!-- Slides -->
+        <ul class="carousel__slides" id="slides" >
+          {items.map((item: any, i: number) => (<li><ContentCard data={item} /></li>))}
+        </ul>
+
+        <!-- Next Link -->
+        <a
+          class="carousel__button carousel__button--arrow carousel__button--right"
+          aria-label="Go to next photo"
+          id="nextLink"
+        >
+        <Icon name="ph:caret-right" class="carousel__svg"  />
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

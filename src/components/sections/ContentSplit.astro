@@ -1,0 +1,28 @@
+---
+
+import SectionHeading from "~/components/common/SectionHeading.astro";
+
+
+const { image, headingWidth, contentWidth, sectionbg, divbg, ...heading } = Astro.props;
+---
+
+<section class:list={["w-full flex items-center justify-center", sectionbg]}>
+    <div class:list={["container  flex flex-col md:flex-row md:items-stretch max-w-screen-xl items-center justify-center p-4 sm:py-8 sm:px-6 md:px-8 gap-8 ", divbg]}>
+        <div class:list={["flex flex-col items-center justify-center  md:items-start md:justify-evenly gap-4", headingWidth || "w-full"]}>
+            <SectionHeading {...heading}>
+                <slot name="heading" />
+            </SectionHeading>
+            {
+                Astro.slots.has("buttons") && (
+                <div class="flex flex-col items-center justify-center sm:flex-row min-w-max md:justify-start gap-4">
+                    <slot name="buttons" />
+                </div>
+                )
+            }
+        </div>
+        <div class:list={["flex flex-col justify-center items-center gap-4 ", contentWidth || "w-full"]}>
+            <slot />
+        </div>
+
+    </div>
+</section>

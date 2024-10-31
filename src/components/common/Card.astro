@@ -1,0 +1,41 @@
+---
+import { Icon } from "astro-icon/components";
+import { getImage } from "astro:assets";
+import { Image } from "astro:assets";
+const {item, icon, title, link, content, elevated, filled,outlined, addClasses} = Astro.props
+
+import image from "~/assets/dog.jpg"
+
+
+// import image from item.image;
+---
+<article class:list={["card justify-between group flex flex-col gap-2 shrink max-w-xs min-w-fit w-full grow pb-4 ", {"cursor-pointer hover:shadow-lg focus-within:shadow-lg": link}, elevated && "bg-[--surfaceContainerLow] shadow rounded", filled&&"bg-[--surfaceContainerHighest] rounded", outlined && "border border-[--outlineVariant] rounded", addClasses]}>
+    <h2 class="w-full capitalize pt-4 no-underline px-2">{title}</h2>
+    <p class:list={[ link && "line-clamp-3"," px-4"]}>
+        {content || item.teaser}
+    </p>
+    {link &&( 
+        <a href={link} class="text-btn text-[--primary] ml-1 pl-3 pr-2">
+                <span class="">read more</span>
+                <Icon name="mdi:arrow-right" class="text-lg flex-none font-normal" aria-hidden="true" />
+        </a>
+    )}
+
+    <Image src={image} alt=""  class="object-cover object-center h-12 sm:h-32 lg:h-80 order-first sm:w-full" format="webp" />
+</article>
+<script>
+  document.addEventListener("astro:page-load", () => {
+    const cards = document.querySelectorAll(".card");
+    Array.prototype.forEach.call(cards, (card) => {
+      let down:any, up, link = card.querySelector("article a");
+      card.onmousedown = () => (down = +new Date());
+      card.onmouseup = () => {
+        up = +new Date();
+        if (up - down < 200) {
+          link.click();
+        }
+      };
+    });
+  });
+
+</script>

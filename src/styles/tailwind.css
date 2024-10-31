@@ -1,0 +1,292 @@
+@import "./colors.css";
+@import "./fonts.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+  /* Prevent font size inflation */
+  html {
+    -moz-text-size-adjust: none;
+    -webkit-text-size-adjust: none;
+    text-size-adjust: none;
+
+    scroll-behavior: smooth;
+
+    /* @apply border-2 border-indigo-400; */
+  }
+
+  /* minimise animations on request */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    body * {
+      animation-duration: 0s !important;
+      animation-delay: 0s !important;
+    }
+  }
+
+  /* Set core body defaults */
+  body {
+    min-height: 100svh;
+    line-height: 1.5;
+
+    /* height: 4000px; */
+    /* @apply border-2 border-green-300; */
+  }
+
+  /* Set shorter line heights on headings and interactive elements */
+  h1,
+  h2,
+  h3,
+  h4,
+  button,
+  input,
+  label {
+    line-height: 1.1;
+  }
+
+  /* Balance text wrapping on headings */
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply mb-1 md:mb-2 text-pretty;
+  }
+
+  h1 {
+    @apply md:text-4xl text-2xl;
+  }
+  h2 {
+    @apply text-xl md:text-2xl;
+  }
+  h3 {
+    @apply text-lg md:text-xl;
+  }
+
+  /* hide elements labelled hidden */
+  [hidden] {
+    display: none !important;
+  }
+  /* if tab to element not possible */
+  [tabindex="-1"] {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+
+  /* A elements that don't have a class get default styles */
+  a:not([class]) {
+    text-decoration-skip-ink: auto;
+    color: currentColor;
+  }
+
+  /* Make sure textareas without a rows attribute are not tiny */
+  textarea:not([rows]) {
+    min-height: 10em;
+  }
+
+  /* prevent click pointer events for inside */
+  button * {
+    pointer-events: none;
+  }
+
+  a,
+  button {
+    text-decoration: none;
+    transition: color 0.15s ease-in-out;
+  }
+  /* scrollbar */
+  * {
+    scrollbar-width: thin;
+    /* scrollbar-color: var(--secondary-50) var(--secondary-200); */
+  }
+
+  /* Chrome, Edge, and Safari */
+  *::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  *::-webkit-scrollbar-track {
+    /* background: var(--background-alt); */
+    border-radius: 5px;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    /* background-color: var(--secondary-50); */
+    border-radius: 14px;
+    /* border: 3px solid var(--secondary-200); */
+  }
+
+  /* Anything that has been anchored to should have extra scroll margin */
+  :target {
+    scroll-margin-block: 5ex;
+  }
+}
+
+@layer components {
+  .gradient {
+    @apply bg-gradient-to-r from-primary-600 to-primary-100 text-white;
+  }
+  .primaryFill {
+    @apply bg-[--primary] text-[--onPrimary];
+  }
+
+  .primaryContainer {
+    @apply bg-[--primaryContainer] text-[--onPrimaryContainer];
+  }
+  .primaryFixed {
+    @apply bg-[--primaryFixedDim] dark:bg-[--primaryFixed] text-[--onPrimaryFixed];
+  }
+
+  [data-icon] {
+    /* color: var(--onSurface); */
+  }
+
+  .subtitle {
+    @apply font-subtitle text-base font-semibold uppercase text-[--primary];
+  }
+
+  .before-gradient {
+    @apply before:bg-gradient-to-r before:from-primary-600 before:to-primary-100 before:text-white;
+  }
+
+  .button {
+    @apply capitalize duration-300 ease-in-out transition-all hover:underline focus:underline sm:min-w-24 rounded-sm font-medium;
+    /* padding: 0.5rem 0.75rem;
+    font-size: 1rem;
+    align-items: center;
+    gap: 0.5rem;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+      border-color 0.15s ease-in-out;
+    @apply inline-flex items-center justify-center text-base font-semibold capitalize duration-300 border-2 border-[--font-color] sm:min-w-48; */
+  }
+  /* .button:hover,
+  .button:focus {
+    text-decoration: underline;
+    @apply text-neutral-100 bg-neutral-800;
+  } */
+  .button.elevated {
+    @apply bg-[--surfaceContainerLow] text-[--primary] shadow hover:shadow-md focus:bg-primary-400/10 hover:bg-primary-400/[0.08] focus:text-primary-400;
+  }
+  .button.filled {
+    @apply bg-[--primary] text-[--onPrimary] hover:opacity-[0.85] hover:text-[--onPrimary] focus:opacity-[0.85]  hover:shadow;
+  }
+  .button.tonal {
+    @apply bg-[--secondaryContainer] text-[--onSecondaryContainer] hover:bg-[--primaryFixedDim];
+  }
+  .button.outlined {
+    @apply text-[--primary] border  border-[--outline] rounded-sm hover:bg-primary-400/[0.08];
+  }
+  .button.outlined-filled {
+    @apply bg-[--surface] text-[--primary] dark:bg-transparent border  border-[--outline] rounded-sm hover:bg-primary-400/[0.08];
+  }
+
+  .elevated.disabled,
+  .filled.disabled,
+  .tonal.disabled {
+    @apply shadow-none bg-onSurface/[0.12] text-onSurface/[0.38] pointer-events-none;
+  }
+
+  .button.color-primary {
+    @apply border-2 border-[--outline] hover:bg-primary-400 hover:text-white text-neutral-100 bg-primary-300;
+  }
+
+  .button.color-secondary {
+    @apply border-2 border-[--secondary-background] bg-transparent font-semibold capitalize text-[--on-surface] hover:border-transparent hover:bg-[--secondary-container] hover:text-[--on-secondary-container];
+  }
+
+  .button.size-tiny {
+    padding: 0.125rem 0.25rem;
+    font-size: 0.75rem;
+    line-height: 1.125rem;
+    @apply sm:min-w-24;
+  }
+
+  .button.size-small {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.3125rem;
+    @apply sm:min-w-32;
+  }
+
+  .button.size-large {
+    padding: 0.75rem 1.5rem;
+    font-size: 1.125rem;
+    line-height: 1.6875rem;
+  }
+
+  .button.size-huge {
+    padding: 1rem 2rem;
+    font-size: 1.25rem;
+    line-height: 1.875rem;
+  }
+
+  .text-btn {
+    @apply rounded-sm  hover:bg-primary-400/[0.08] capitalize duration-300 ease-in-out transform transition-all hover:underline focus:no-underline sm:min-w-24 font-medium whitespace-nowrap flex justify-center items-center gap-2 py-2 w-fit;
+  }
+  .text-btn.disabled {
+    @apply text-onSurface/[0.38] hover:bg-onSurface/[0.08];
+  }
+  .primaryFill.text-btn {
+    @apply text-[--onPrimary];
+  }
+
+  #footer-nav {
+    > ul {
+      /* @apply bg-pink-200 border-2 border-green-200; */
+      @apply flex w-full flex-wrap items-start justify-center gap-x-4 gap-y-2 whitespace-nowrap text-center text-[--font-variant] sm:flex-nowrap md:mt-0 lg:gap-6;
+      > li {
+        > ul {
+          @apply font-normal text-xs flex flex-col gap-1.5 py-2;
+        }
+      }
+      > .nested-list {
+        @apply font-medium text-[--font];
+      }
+    }
+    a:hover,
+    a:focus,
+    .is-active,
+    .has-dropdown > button:hover,
+    .has-dropdown > button:focus {
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-decoration-style: wavy;
+      text-underline-offset: 0.25rem;
+    }
+  }
+
+  /* hide antispam */
+  .email-link .antispam {
+    display: none;
+  }
+}
+
+@layer utilities {
+  .elevation-0 {
+    @apply shadow-none;
+  }
+  .elevation-1 {
+    @apply shadow;
+  }
+  .elevation-2 {
+    @apply shadow-md;
+  }
+  .elevation-3 {
+    @apply shadow-lg;
+  }
+  .elevation-4 {
+    @apply shadow-xl;
+  }
+  .elevation-5 {
+    @apply shadow-2xl;
+  }
+}

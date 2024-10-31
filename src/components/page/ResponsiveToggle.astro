@@ -1,0 +1,40 @@
+---
+import { Icon } from "astro-icon/components";
+const {colors ="text-[--onSurface] hover:text-[--onSurfaceVariant]"} = Astro.props
+---
+
+<button
+  class:list={["responsive-toggle nav-icon flex h-full items-center justify-center md:hidden p-3", colors]}
+  aria-expanded="false"
+  data-hamburger-button
+  aria-label="Open navigation menu"
+>
+  <!-- <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    class="nav-icon"
+    ><path fill="currentColor" d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"
+    ></path></svg
+  > -->
+  <Icon name="mdi:hamburger-menu" class="h-6 w-6" aria-hidden="true"/>
+
+</button>
+
+<style lang="css">
+  
+  *:focus,
+  *:focus-visible {
+    outline: 2px dotted var(--outline);
+    outline-color: black;
+    outline-offset: 0;
+    -webkit-box-shadow: 0 0 0 2px white;
+    box-shadow: 0 0 0 2px white;
+  }
+
+  *:focus:not(:focus-visible) {
+    outline: none;
+    box-shadow: none;
+  }
+</style>

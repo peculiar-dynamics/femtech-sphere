@@ -1,0 +1,62 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro"
+import PageHeader from "~/components/sections/PageHeader.astro"
+import CallOut from "~/components/sections/CallOut.astro"
+import ContentGallery from "~/components/sections/ContentGallery.astro"
+import ContentSplit from "~/components/sections/ContentSplit.astro"
+
+import Card from "~/components/common/Card.astro"
+import Button from "~/components/common/Button.astro"
+
+import content from "~/data/content"
+
+const title = "About Us"
+const description = "Description about us"
+
+const partners = content.partners.slice(0,3)
+---
+
+<BaseLayout {title} {description} header="transparent">
+    <PageHeader {title} gradient/>
+    <CallOut title="Our mission">
+        <Fragment slot="content" >
+            <p  class="font-semibold max-w-[40ch] capitalize text-xl md:text-2xl">
+                "DELIVER <strong>CLARITY</strong> ON COMPLEX GRC PROBLEMS TO OUR CUSTOMERS THROUGH AN ECOSYSTEM OF <strong>BEST-IN-CLASS TECHNOLOGY</strong> AND EXPERTISE"
+            </p>
+        </Fragment>
+    </CallOut>
+    <ContentGallery subtitle="What we stand for" title="Our Values" items={content.about.features} gallery="features"/>
+
+    <ContentGallery subtitle="Our Team" title="Or Testimonials" items={content.about.team} gallery="cards"/>
+
+    <ContentSplit title="Building Relationships" subtitle="Our Partners" id="partners">
+		<Fragment slot="heading">
+			<p class=" md:text-left text-center" >
+				Navigating a fast-moving threat and regulatory landscape with a dynamic GRC programme is a challenge. 
+			</p>
+			<p class=" md:text-left text-center" >
+				Risk Rising helps its customers identify the best fit technology solutions, successfully executes implementations and integrations of those solutions, and provides the appropriate level of aftercare support.
+			</p>
+		</Fragment>
+
+		<Button
+		href="/services"
+		text="Partner Services"
+		type="filled"
+		addClasses="w-fit"
+		slot="buttons"
+
+		/>
+
+		<div class="grid grid-rows-4 grid-flow-col gap-4">
+            <span class="row-span-1" aria-hidden="true"></span>
+			{ partners.map((item) => (
+				<Card title={item.title} content={item.content} addClasses="row-span-2" outlined>
+					<p>{item.content}</p>
+				</Card>
+			))}
+		</div>
+
+	</ContentSplit>
+
+</BaseLayout>

@@ -1,0 +1,130 @@
+---
+import siteInfo from "~/data/site-info";
+
+import Logo from './Logo.astro';
+import Socials from "../common/Socials.astro";
+import InlineEmail from "~/components/common/InlineEmail.astro";
+import NestedList from "../common/NestedList.astro";
+
+const currentYear = new Date().getFullYear();
+const {pages = siteInfo.pages, nested } = Astro.props;
+
+---
+
+<footer class="flex w-full flex-col items-center bg-[--surfaceContainerHigh] p-4 overflow-x-hidden">
+  <div
+    class="container flex flex-col items-center justify-between gap-4 md:flex-row md:flex-nowrap md:gap-8"
+  >
+    <!-- Logo Group -->
+    <Logo footer />
+
+    <!-- Links -->
+    <nav
+      id="footer-nav"
+      aria-label="Site Pages"
+      class="w-full text-sm md:w-3/5"
+    >
+      { nested ? (
+              <NestedList items ={siteInfo.pages} />
+        ) :(
+        <ul
+          class="flex w-full flex-wrap items-center justify-center gap-x-4 gap-y-2 whitespace-nowrap text-center text-[--onSurfaceVariant] sm:flex-nowrap md:mt-0 lg:gap-6"
+        >
+          {
+            pages.map((page:any) => (
+              <li>
+                {page.pages ? (
+                  <Astro.self pages={page.pages} />
+                ) : (
+                  <a class="footer-link" href={page.url}>
+                    {page.key}
+                  </a>
+                )
+                }
+              </li>
+
+            ))
+          }
+        </ul>
+        )
+
+      }
+
+
+    </nav>
+
+    <section
+      class="flex h-full w-full flex-col items-center justify-between gap-2 md:w-1/5 md:items-end"
+    >
+      <!-- socials -->
+      <Socials
+        textSize="text-3xl"
+        addClass="flex min-w-fit gap-2 px-2 text-[--onSurfaceVariant]"
+        links = {siteInfo.socialLinks.filter(social => social.footer)}
+      />
+
+      <InlineEmail
+        addClasses="order-first px-2 text-xs md:order-last"
+      />
+    </section>
+  </div>
+
+  <hr class="my-2 w-full border-[--outlineVariant] sm:mx-auto" />
+
+  <div
+    class="container flex w-full flex-col items-center justify-center gap-y-4 sm:gap-y-2 text-xs text-[--onSurfaceVariant] md:flex-row"
+  >
+    <p class="text-balance inline-flex sm:whitespace-nowrap gap-2 text-center px-2">
+      <a
+        class="footer-link"
+        href="https://peculiardynamics.co.uk/"
+        target="_blank"
+        >Another Peculiar Site
+      </a>
+      <span class="hidden sm:block" aria-hidden="true">|</span>
+      Copyright &copy; {currentYear}
+    </p>
+    <ul class="flex w-full flex-wrap text-center sm:text-left justify-center gap-2 p-2 md:justify-end">
+      <li class="text-balance sm:whitespace-nowrap">
+        <a class="footer-link" href="/policies/terms">Terms and Conditions</a>
+      </li>
+      <span class="hidden sm:block" aria-hidden="true">|</span>
+      <li class="text-balance sm:whitespace-nowrapp">
+        <a class="footer-link" href="/policies/privacy">Privacy Policy</a>
+      </li>
+      <span class="hidden sm:block" aria-hidden="true">|</span>
+      <li class="text-balance sm:whitespace-nowrap">
+        <a class="footer-link" href="/policies/cookies" data-astro-reload>Cookie Notice</a>
+      </li>
+      <span class="hidden sm:block" aria-hidden="true">|</span>
+      <li>
+        <a class="footer-link" href="/sitemap-index.xml">Sitemap</a>
+      </li>
+    </ul>
+  </div>
+  <slot name="legals" />
+    <!-- legals -->
+    <div
+      class="container flex w-full flex-wrap justify-between gap-2 px-2 py-2 text-center text-xs text-[--onSurfaceVariant] sm:flex-nowrap sm:text-left text-balance"
+      slot="legals"
+    >
+      <p class="flex w-full flex-col items-center gap-x-2 md:flex-row">
+        {siteInfo.business.VATReg && (
+          <span class="text-nowrap">VAT #{siteInfo.business.VATReg}</span>
+          <span aria-hidden="true" class="hidden md:block">|</span>
+        )
+        
+        }
+      
+        <span>Registered in England and Wales (#{siteInfo.business.companiesReg})</span>
+      </p>
+
+      <p
+        class="flex w-full flex-col items-center justify-center gap-x-2 sm:justify-end md:flex-row"
+      >
+        Registered Office: <span>{siteInfo.business.regAddress}</span>
+      </p>
+    </div>
+</footer>
+
+
