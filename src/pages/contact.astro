@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "~/layouts/BaseLayout.astro"
 import PageHeader from "~/components/sections/PageHeader.astro"
-
+import CallOut from "~/components/sections/CallOut.astro"
 import ContentSplit from "~/components/sections/ContentSplit.astro"
 import Feature from "~/components/common/Feature.astro"
 import InlineEmail from "~/components/common/InlineEmail.astro"
@@ -12,9 +12,16 @@ const title = "Contact"
 const description = "Contact description"
 ---
 <BaseLayout {title} {description} header="transparent">
-    <PageHeader {title} gradient/>
+    
+    <CallOut  sectionbg="text-[--onPrimary] mt-32 z-0" icon>
+        <Fragment slot="content" >
+            <h1  class=" font-title max-w-[40ch] capitalize text-2xl md:text-4xl leading-loose">
+                Contact Us
+            </h1>
+        </Fragment>
+    </CallOut>
 
-    <div class="max-w-screen-lg flex w-full">
+    <div class="max-w-screen-lg flex w-full text-[--onPrimary] z-10">
         <ContentSplit title="" subtitle="Get In Touch" id="contact" addClasses="h-full ">
                 <Fragment slot="heading">
         
@@ -28,7 +35,7 @@ const description = "Contact description"
                 </Fragment>
         
         
-            <div class="flex h-full max-w-lg w-full flex-none flex-col  items-center justify-center bg-blue-200 p-4 shadow sm:p-6 lg:max-w-5xl lg:p-8 lg:py-14">
+            <div class="flex h-full max-w-lg w-full flex-none flex-col  items-center justify-center bg-[--secondaryContainer] rounded-md p-4 shadow sm:p-6 lg:max-w-5xl lg:p-8 lg:py-14">
                 <p
                 aria-roledescription="subtitle"
                 class="font-subtitle text-base font-semibold uppercase text-[--primary] text-left w-full mb-8">

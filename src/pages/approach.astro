@@ -13,17 +13,17 @@ import { Image } from "astro:assets"
 import content from "~/data/content"
 import heroImage from "~/assets/cat.avif"
 
-const title = "Approach"
-const description = "Approach Description"
+const title = "Startups"
+const description = "Startups Description"
 
 const partners = content.partners.slice(0,3)
 ---
 
 <BaseLayout {title} {description} header="transparent">
     <!-- <PageHeader {title} gradient/> -->
-    <CallOut title="Our Approach" sectionbg="text-[--onPrimary] mt-32" icon>
+    <CallOut title="Our Approach" sectionbg="text-[--onPrimary] my-32" icon>
         <Fragment slot="content" >
-            <p  class="font-semibold font-title max-w-[40ch] capitalize text-2xl md:text-4xl leading-loose">
+            <p  class="font-title max-w-[40ch] capitalize text-2xl md:text-4xl leading-loose">
                 Integer hendrerit tellus nedddque. Sed lobortis faucibus magna sed luctus.
             </p>
             <p>Praesent iaculis nulla a commodo suscipit. Phasellus iaculis lorem ut risus dapibus, vestibulum sollicitudin tellus rutrum. Donec convallis feugiat vehicula. Duis accumsan massa et est maximus, at commodo tellus venenatis. Proin nec justo placerat dui condimentum tincidunt ut pretium libero.</p>

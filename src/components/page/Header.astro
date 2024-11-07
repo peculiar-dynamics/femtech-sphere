@@ -22,9 +22,9 @@ const { header = "transparent", fontColors } = Astro.props;
     <Navigation {header} {fontColors}  />
     <div class="order-3 flex items-center justify-center px-2 gap-x-2 ">
         <!-- add cta button -->
-        { siteInfo.navCta &&
+        <!-- { siteInfo.navCta &&
             <Button addClasses="min-[420px]:inline-flex hidden size-tiny sm:size-small" text={siteInfo.navCta.label} href={siteInfo.navCta.href} type="outlined-filled"  />
-        }
+        } -->
         <DarkMode colors={fontColors} />
     </div>
 

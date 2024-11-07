@@ -147,7 +147,7 @@ export default function ContactMessageNetlify() {
         <p className="">{errors.email?.message}</p>
       </div>
       {/* SUBJECT */}
-      <div className="text-input">
+      {/* <div className="text-input">
         <label htmlFor="contact-subject" className="sr-only">
           Subject
         </label>
@@ -175,7 +175,7 @@ export default function ContactMessageNetlify() {
         </select>
 
         <p className="">{errors.subject?.message}</p>
-      </div>
+      </div> */}
 
       <div className=" text-input">
         <label htmlFor="contact-message">Message</label>

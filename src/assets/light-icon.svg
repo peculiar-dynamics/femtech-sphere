@@ -1,13 +1,11 @@
 <svg width="586" height="580" viewBox="0 0 586 580" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<circle cx="293" cy="287" r="282" stroke="#9FCAFC" stroke-width="4"/>
-<circle cx="293" cy="287" r="282" stroke="#9FCAFC" stroke-width="4"/>
-<circle cx="293" cy="287" r="265" stroke="#9FCAFC" stroke-width="4"/>
-<circle cx="293" cy="287" r="265" stroke="#9FCAFC" stroke-width="4"/>
+<circle cx="293" cy="287" r="282" stroke="white" stroke-width="4"/>
+<circle cx="293" cy="287" r="265" stroke="white" stroke-width="4"/>
 <mask id="mask0_459_742" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="45" y="53" width="495" height="469">
 <rect x="45" y="53" width="495" height="469" fill="url(#pattern0_459_742)"/>
 </mask>
 <g mask="url(#mask0_459_742)">
-<rect x="45" y="43" width="495" height="479" fill="#9FCAFC"/>
+<rect x="45" y="43" width="495" height="479" fill="white"/>
 </g>
 <defs>
 <pattern id="pattern0_459_742" patternContentUnits="objectBoundingBox" width="1" height="1">
