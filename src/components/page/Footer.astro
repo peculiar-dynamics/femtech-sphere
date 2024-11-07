@@ -5,18 +5,30 @@ import Logo from './Logo.astro';
 import Socials from "../common/Socials.astro";
 import InlineEmail from "~/components/common/InlineEmail.astro";
 import NestedList from "../common/NestedList.astro";
+import { Image } from "astro:assets";
+
+import lightIcon from "~/assets/light-icon.png"
 
 const currentYear = new Date().getFullYear();
-const {pages = siteInfo.pages, nested } = Astro.props;
+const {pages = siteInfo.pages, nested=true } = Astro.props;
 
 ---
 
-<footer class="flex w-full flex-col items-center bg-[--primaryContainer] text-[--onPrimaryContainer] p-4 overflow-x-hidden">
+<footer class="flex w-full flex-col items-center bg-[--primaryContainer] text-[--primaryFixed] p-4 overflow-x-hidden z-10">
   <div
     class="container flex flex-col items-center justify-between gap-4 md:flex-row md:flex-nowrap md:gap-8"
   >
     <!-- Logo Group -->
-    <Logo footer />
+    <!-- <Logo footer /> -->
+    <a href="/"       aria-label="navigate to home"
+      class:list={[
+        " flex shrink items-center justify-start rounded-md max-w-full object-contain  gap-2 !no-underline h-12"
+        ]}>
+
+        <!-- light screen logo -->
+        <Image src={lightIcon} alt="" class=" flex object-contain max-h-full w-auto" />
+
+      </a>
 
     <!-- Links -->
     <nav
@@ -27,8 +39,9 @@ const {pages = siteInfo.pages, nested } = Astro.props;
       { nested ? (
               <NestedList items ={siteInfo.pages} />
         ) :(
+          // issue here where links are unclickable - temp fix default nested to true
         <ul
-          class="flex w-full flex-wrap items-center justify-center gap-x-4 gap-y-2 whitespace-nowrap text-center text-[--onSurfaceVariant] sm:flex-nowrap md:mt-0 lg:gap-6"
+          class="flex w-full flex-wrap items-center justify-center gap-x-4 gap-y-2 whitespace-nowrap text-center text-[--primaryFixedDim] sm:flex-nowrap md:mt-0 lg:gap-6"
         >
           {
             pages.map((page:any) => (
@@ -59,8 +72,8 @@ const {pages = siteInfo.pages, nested } = Astro.props;
       <!-- socials -->
       <Socials
         textSize="text-3xl"
-        addClass="flex min-w-fit gap-2 px-2 text-[--onSurfaceVariant]"
-        links = {siteInfo.socialLinks.filter(social => social.footer)}
+        addClass="flex min-w-fit gap-2 px-2 text-[--primaryFixedDim]"
+        links = {siteInfo.socialLinks.filter(social => social.footer).filter(social => social.active)}
       />
 
       <InlineEmail
@@ -69,22 +82,27 @@ const {pages = siteInfo.pages, nested } = Astro.props;
     </section>
   </div>
 
-  <hr class="my-2 w-full border-[--outlineVariant] sm:mx-auto" />
+  <hr class="my-2 w-full border-[--primaryFixed] sm:mx-auto" />
 
   <div
-    class="container flex w-full flex-col items-center justify-center gap-y-4 sm:gap-y-2 text-xs text-[--onSurfaceVariant] md:flex-row"
+    class="container flex w-full flex-col items-center justify-center gap-y-4 sm:gap-y-2 text-xs text-[--primaryFixedDim] md:flex-row"
   >
-    <p class="text-balance inline-flex sm:whitespace-nowrap gap-2 text-center px-2">
+    <div class="text-balance inline-flex items-center flex-col sm:flex-row sm:whitespace-nowrap gap-x-2 text-center px-2">
       <a
-        class="footer-link"
+        class="footer-link inline-flex items-center flex-wrap sm:flex-nowrap w-fit justify-center flex-none"
         href="https://peculiardynamics.co.uk/"
         target="_blank"
-        >Another Peculiar Site
+        >
+        Another
+        <span class="inline-flex justify-center items-center flex-none ">
+          <Image src="/assets/peculiar-dynamics.webp" alt="Peculiar Dynamics Web Development" width={24} height={24} class="object-scale-down pl-1 h-6 w-6 self-end" />
+          <span aria-hidden="true" class="pr-1 ">eculiar</span>
+        </span>Site
       </a>
       <span class="hidden sm:block" aria-hidden="true">|</span>
       Copyright &copy; {currentYear}
-    </p>
-    <ul class="flex w-full flex-wrap text-center sm:text-left justify-center gap-2 p-2 md:justify-end">
+    </div>
+    <ul class="flex w-full flex-wrap text-center  items-end sm:text-left justify-center gap-2 p-2 md:justify-end">
       <li class="text-balance sm:whitespace-nowrap">
         <a class="footer-link" href="/policies/terms">Terms and Conditions</a>
       </li>
@@ -105,7 +123,7 @@ const {pages = siteInfo.pages, nested } = Astro.props;
   <slot name="legals" />
     <!-- legals -->
     <div
-      class="container flex w-full flex-wrap justify-between gap-2 px-2 py-2 text-center text-xs text-[--onSurfaceVariant] sm:flex-nowrap sm:text-left text-balance"
+      class="container flex w-full flex-wrap justify-between gap-2 px-2 py-2 text-center text-xs  sm:flex-nowrap sm:text-left text-balance"
       slot="legals"
     >
       <p class="flex w-full flex-col items-center gap-x-2 md:flex-row">

@@ -1,0 +1,155 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro"
+import PageHeader from "~/components/sections/PageHeader.astro"
+import CallOut from "~/components/sections/CallOut.astro"
+import ContentGallery from "~/components/sections/ContentGallery.astro"
+import ContentSplit from "~/components/sections/ContentSplit.astro"
+
+import Card from "~/components/common/Card.astro"
+import Button from "~/components/common/Button.astro"
+
+import { Image } from "astro:assets"
+
+import content from "~/data/content"
+import heroImage from "~/assets/cat.avif"
+
+const title = "Approach"
+const description = "Approach Description"
+
+const partners = content.partners.slice(0,3)
+---
+
+<BaseLayout {title} {description} header="transparent">
+    <!-- <PageHeader {title} gradient/> -->
+    <CallOut title="Our Approach" sectionbg="text-[--onPrimary] mt-32" icon>
+        <Fragment slot="content" >
+            <p  class="font-semibold font-title max-w-[40ch] capitalize text-2xl md:text-4xl leading-loose">
+                Integer hendrerit tellus nedddque. Sed lobortis faucibus magna sed luctus.
+            </p>
+            <p>Praesent iaculis nulla a commodo suscipit. Phasellus iaculis lorem ut risus dapibus, vestibulum sollicitudin tellus rutrum. Donec convallis feugiat vehicula. Duis accumsan massa et est maximus, at commodo tellus venenatis. Proin nec justo placerat dui condimentum tincidunt ut pretium libero.</p>
+        </Fragment>
+    </CallOut>
+
+    <ContentSplit title="Nullam sagittis cursus aliquet." subtitle="Ecosystem" id="ecosystem" sectionbg="text-[--onSecondaryContainer] bg-[--secondaryContainer]">
+		<Fragment slot="heading">
+			<p class=" md:text-left text-center" >
+				Nulla ut tristique magna. Donec consectetur quam massa, sagittis sagittis lorem facilisis id. Mauris quis leo ut lectus ultricies mattis sit amet semper quam. 
+			</p>
+			<p class=" md:text-left text-center" >
+				Proin euismod vel lorem posuere malesuada. Etiam consectetur consectetur lorem, at faucibus arcu cursus id. Maecenas molestie nulla eget accumsan eleifend. Etiam faucibus tempor lectus. Pellentesque sodales ligula vel felis porta facilisis.
+			</p>
+		</Fragment>
+		<!-- <Fragment slot="buttons"> -->
+			<Button
+			href="/ecosystem"
+			text="Explore Ecosystem"
+			type="filled"
+			buttonColor=""
+			slot="buttons"
+
+			/>
+
+		<!-- </Fragment> -->
+		<div class="flex flex-col gap-4 bg-[--secondaryContainer] rounded-md">
+			<!-- { services.map((service, i) => (
+				<Feature title={service.title} link={`/services#${service.id}`} bg={featureColors[i]}>
+					<p>{service.content}</p>
+				</Feature>
+			))} -->
+			<Image src={heroImage} alt="" class="relative p-4 py-16 rounded-md  object-cover object-center" />
+		</div>
+
+	</ContentSplit>
+
+    <ContentSplit title="Nullam sagittis cursus aliquet." subtitle="Ecosystem" id="ecosystem" sectionbg="text-[--onPrimary]">
+		<Fragment slot="heading">
+			<p class=" md:text-left text-center" >
+				Nulla ut tristique magna. Donec consectetur quam massa, sagittis sagittis lorem facilisis id. Mauris quis leo ut lectus ultricies mattis sit amet semper quam. 
+			</p>
+			<p class=" md:text-left text-center" >
+				Proin euismod vel lorem posuere malesuada. Etiam consectetur consectetur lorem, at faucibus arcu cursus id. Maecenas molestie nulla eget accumsan eleifend. Etiam faucibus tempor lectus. Pellentesque sodales ligula vel felis porta facilisis.
+			</p>
+		</Fragment>
+		<!-- <Fragment slot="buttons"> -->
+			<Button
+			href="/ecosystem"
+			text="Explore Ecosystem"
+			type="filled"
+			buttonColor=""
+			slot="buttons"
+
+			/>
+
+		<!-- </Fragment> -->
+		<div class="flex flex-col gap-4 bg-[--tertiaryContainer] rounded-md">
+			<!-- { services.map((service, i) => (
+				<Feature title={service.title} link={`/services#${service.id}`} bg={featureColors[i]}>
+					<p>{service.content}</p>
+				</Feature>
+			))} -->
+			<Image src={heroImage} alt="" class="relative p-4 py-16 rounded-md  object-cover object-center" />
+		</div>
+
+	</ContentSplit>
+    <ContentSplit title="Nullam sagittis cursus aliquet." subtitle="Ecosystem" id="ecosystem" sectionbg="text-[--onPrimary]" imageLeft>
+		<Fragment slot="heading">
+			<p class=" md:text-left text-center" >
+				Nulla ut tristique magna. Donec consectetur quam massa, sagittis sagittis lorem facilisis id. Mauris quis leo ut lectus ultricies mattis sit amet semper quam. 
+			</p>
+			<p class=" md:text-left text-center" >
+				Proin euismod vel lorem posuere malesuada. Etiam consectetur consectetur lorem, at faucibus arcu cursus id. Maecenas molestie nulla eget accumsan eleifend. Etiam faucibus tempor lectus. Pellentesque sodales ligula vel felis porta facilisis.
+			</p>
+		</Fragment>
+		<!-- <Fragment slot="buttons"> -->
+			<Button
+			href="/ecosystem"
+			text="Explore Ecosystem"
+			type="filled"
+			buttonColor=""
+			slot="buttons"
+
+			/>
+
+		<!-- </Fragment> -->
+		<div class="flex flex-col gap-4 bg-[--primaryContainer] rounded-md">
+			<!-- { services.map((service, i) => (
+				<Feature title={service.title} link={`/services#${service.id}`} bg={featureColors[i]}>
+					<p>{service.content}</p>
+				</Feature>
+			))} -->
+			<Image src={heroImage} alt="" class="relative p-4 py-16 rounded-md  object-cover object-center" />
+		</div>
+
+	</ContentSplit>
+    <ContentSplit title="Nullam sagittis cursus aliquet." subtitle="Ecosystem" id="ecosystem" sectionbg="text-[--onPrimary]">
+		<Fragment slot="heading">
+			<p class=" md:text-left text-center" >
+				Nulla ut tristique magna. Donec consectetur quam massa, sagittis sagittis lorem facilisis id. Mauris quis leo ut lectus ultricies mattis sit amet semper quam. 
+			</p>
+			<p class=" md:text-left text-center" >
+				Proin euismod vel lorem posuere malesuada. Etiam consectetur consectetur lorem, at faucibus arcu cursus id. Maecenas molestie nulla eget accumsan eleifend. Etiam faucibus tempor lectus. Pellentesque sodales ligula vel felis porta facilisis.
+			</p>
+		</Fragment>
+		<!-- <Fragment slot="buttons"> -->
+			<Button
+			href="/ecosystem"
+			text="Explore Ecosystem"
+			type="filled"
+			buttonColor=""
+			slot="buttons"
+
+			/>
+
+		<!-- </Fragment> -->
+		<div class="flex flex-col gap-4 bg-[--secondaryContainer] rounded-md">
+			<!-- { services.map((service, i) => (
+				<Feature title={service.title} link={`/services#${service.id}`} bg={featureColors[i]}>
+					<p>{service.content}</p>
+				</Feature>
+			))} -->
+			<Image src={heroImage} alt="" class="relative p-4 py-16 rounded-md  object-cover object-center" />
+		</div>
+
+	</ContentSplit>
+
+</BaseLayout>

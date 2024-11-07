@@ -6,6 +6,7 @@ type Inputs = {
   name: string;
   email: string;
   message: string;
+  subject?: string;
 };
 
 const encode = (data: any) => {
@@ -28,6 +29,7 @@ export default function ContactMessageNetlify() {
       name: "",
       email: "",
       message: "",
+      subject: "",
     },
   });
 
@@ -62,7 +64,7 @@ export default function ContactMessageNetlify() {
       id="contactForm"
       name="contactForm"
       onSubmit={handleSubmit(onSubmit)}
-      className="relative flex w-full flex-col items-center justify-center gap-4"
+      className="relative flex-none flex w-full flex-col items-center justify-center gap-4 "
       data-netlify="true"
       netlify-honeypot="bot-field"
       method="POST"
@@ -76,7 +78,7 @@ export default function ContactMessageNetlify() {
       {isSubmitSuccessful && (
         <div
           id="success-message"
-          className="absolute z-20 flex h-full w-full flex-col items-center justify-center rounded-md bg-[--surface-container-low] p-4 text-center shadow-md"
+          className="absolute z-20 flex h-full w-full flex-col items-center justify-center rounded-md bg-[--surfaceContainerLow] p-4 text-center shadow-md"
         >
           <Icon
             icon="mdi:success-circle-outline"
@@ -89,7 +91,7 @@ export default function ContactMessageNetlify() {
             Your message has been received and we will get back to you ASAP.
           </p>
           <button
-            className="button tonal size-small w-fit"
+            className="button tonal  w-fit"
             type="reset"
             onClick={() => {
               reset();
@@ -99,8 +101,9 @@ export default function ContactMessageNetlify() {
           </button>
         </div>
       )}
-      <div className="flex w-full flex-col gap-1">
-        <label htmlFor="contact-name" className="sr-only">
+      {/* NAME  */}
+      <div className="text-input">
+        <label htmlFor="contact-name" className="">
           Full Name
         </label>
         <input
@@ -114,19 +117,18 @@ export default function ContactMessageNetlify() {
           })}
           aria-invalid={errors.name ? "true" : "false"}
           placeholder={"Full Name"}
-          className="w-full rounded-md border-2 px-4  py-3 outline-none "
+          className=" "
           autoComplete="name"
           disabled={isSubmitting || isSubmitSuccessful}
           id="contact-name"
         />
-        <p className="w-full text-sm font-medium text-[--error]">
-          {errors.name?.message}
-        </p>
+
+        <p className="">{errors.name?.message}</p>
       </div>
-      <div className="flex w-full flex-col gap-1">
-        <label htmlFor="contact-email" className="sr-only">
-          Email Address
-        </label>
+
+      {/* EMAIL */}
+      <div className="text-input">
+        <label htmlFor="contact-email">Email Address</label>
         <input
           {...register("email", {
             required: "Email Address is required",
@@ -137,39 +139,66 @@ export default function ContactMessageNetlify() {
           })}
           aria-invalid={errors.email ? "true" : "false"}
           placeholder="Email Address"
-          className="w-full rounded-md border-2 px-4 py-3 outline-none"
+          className=""
           autoComplete="email"
           disabled={isSubmitting || isSubmitSuccessful}
           id="contact-email"
         />
-        <p className="w-full text-sm font-medium text-[--error]">
-          {errors.email?.message}
-        </p>
+        <p className="">{errors.email?.message}</p>
       </div>
-      <div className=" flex w-full flex-col gap-1">
-        <label htmlFor="contact-message" className="sr-only">
-          Message
+      {/* SUBJECT */}
+      <div className="text-input">
+        <label htmlFor="contact-subject" className="sr-only">
+          Subject
         </label>
+
+        <select
+          id="contact-subject"
+          {...register("subject")}
+          aria-invalid={errors.subject ? "true" : "false"}
+          className=""
+          disabled={isSubmitting || isSubmitSuccessful}
+        >
+          <option value="" selected>
+            Subject
+          </option>
+          <optgroup label="Solutions Demo">
+            <option value="logicgate-demo">LogicGate Demo</option>
+            <option value="panorays-demo">Panorays Demo</option>
+          </optgroup>
+          <optgroup label="Other">
+            <option value="services">Services Enquiry</option>
+            <option value="general">General Enquiry</option>
+            <option value="quote">Quotation</option>
+            <option value="press">Press Enquiry</option>
+          </optgroup>
+        </select>
+
+        <p className="">{errors.subject?.message}</p>
+      </div>
+
+      <div className=" text-input">
+        <label htmlFor="contact-message">Message</label>
         <textarea
           {...register("message", {
             required: "A Message is required",
             minLength: {
               value: 20,
-              message: "Please enter a message more than 20 characters long",
+              message: "Enter a message longer than 20 characters",
             },
             maxLength: {
               value: 1500,
-              message: "Please enter a message less than 1500 characters",
+              message: "Enter a message shorter than 1500 characters",
             },
           })}
           aria-invalid={errors.message ? "true" : "false"}
-          placeholder="Let us know how we can help!"
-          className="h-36 w-full rounded-md border-2  px-4 py-3 outline-none "
+          placeholder="How can we help?"
+          className=" "
           disabled={isSubmitting || isSubmitSuccessful}
           id="contact-message"
         />
-        <div className="flex w-full max-w-full items-start justify-between gap-4">
-          <p className="w-fit text-sm font-medium text-[--error]">
+        <div className="area-subtext">
+          <p className="w-fit text-sm text-[--error]">
             {errors.message?.message}
           </p>
           <p
@@ -185,13 +214,13 @@ export default function ContactMessageNetlify() {
 
       <button
         type="submit"
-        className="button w-fit"
+        className=" w-fit"
         aria-live="assertive"
         disabled={isSubmitting || isSubmitSuccessful}
       >
         {isSubmitting ? (
           <span
-            className="btnSubmit-text tonal inline-flex w-full items-center justify-center gap-2"
+            className="btnSubmit-text button tonal inline-flex w-full items-center justify-center gap-2"
             aria-label="Sending message, please wait..."
           >
             <svg
@@ -210,11 +239,11 @@ export default function ContactMessageNetlify() {
             Sending
           </span>
         ) : isSubmitSuccessful ? (
-          <span className="btnSubmit-text disabled inline-flex items-center justify-center py-2 px-6 rounded-sm gap-2">
+          <span className="btnSubmit-text button disabled inline-flex items-center justify-center py-2 px-6 rounded-sm gap-2">
             Message Sent
           </span>
         ) : (
-          <span className="btnSubmit-text filled inline-flex py-2 px-6 items-center justify-center rounded-sm gap-2">
+          <span className="btnSubmit-text button filled inline-flex py-2 px-6 items-center justify-center rounded-sm gap-2">
             Send Message
           </span>
         )}
@@ -225,9 +254,9 @@ export default function ContactMessageNetlify() {
         ></span>
       </button>
 
-      <div className="inline-flex w-full flex-wrap items-center justify-center gap-1 whitespace-nowrap text-center text-xs text-[--onSurfaceVariant] sm:text-left">
+      <div className="inline-flex w-full flex-wrap items-center justify-center gap-1 whitespace-nowrap text-center text-xs text-[--primary] sm:text-left">
         Check out our
-        <a href="/policies/privacy" className=" text-[--tertiary] underline">
+        <a href="/policies/privacy" className=" text-[--primary] underline">
           Privacy Policy
         </a>
         for how we use your data.

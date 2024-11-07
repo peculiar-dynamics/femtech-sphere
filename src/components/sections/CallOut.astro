@@ -1,20 +1,32 @@
 ---
 import SectionHeading from "~/components/common/SectionHeading.astro";
+import { Image } from "astro:assets"
 
-const {subtitle, title, content} = Astro.props
+import lightIcon from "~/assets/light-icon.png"
+import darkIcon from "~/assets/dark-icon.png"
+import line from "~/assets/bg-line.png"
+
+const {subtitle, title, content, sectionbg, icon} = Astro.props
 ---
 
-<section class="max-w-2xl bg-white flex flex-col gap-4 items-center justify-center text-center p-8 md:p-16">
+<section class:list={["max-w-2xl  flex flex-col gap-4 items-center justify-center text-center p-8 md:p-16 z-10", sectionbg]}>
+    {icon && (
+        
+      <Image src={lightIcon} alt="" class="dark:hidden flex object-contain max-h-24 w-auto" />
+      
+      
+      <Image src={darkIcon} alt="" class="hidden dark:flex object-contain max-h-24 w-auto" />
+    )}
     {title && (
         <h1
           aria-roledescription="subtitle"
-          class="font-subtitle text-base font-semibold uppercase text-[--primary] max-w-[40ch] underline decoration-[--action-color] decoration-4 underline-offset-8"
+          class=" text-base font-semibold font-subtitle uppercase text-[--onPrimary] max-w-[40ch] underline decoration-[--action-color] decoration-4 underline-offset-8"
         >
           {title}
         </h1>
     )}
     {subtitle ? (
-        <p aria-roledescription="subtitle" class="font-semibold capitalize text-xl md:text-2xl">{subtitle}</p>
+        <p aria-roledescription="subtitle" class=" font-title font-semibold capitalize text-xl md:text-2xl">{subtitle}</p>
         <p class="max-w-[50ch] text-base lg:text-lg">{content}</p>
     ) : (
         <slot name="content" />
@@ -22,3 +34,5 @@ const {subtitle, title, content} = Astro.props
 }
 
 </section>
+
+<Image src={line} alt="" class="flex h-[50vh] mt-32 opacity-30 max-w-screen-2xl  items-center   absolute z-0" />

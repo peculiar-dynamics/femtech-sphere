@@ -127,31 +127,40 @@ const siteInfo: SiteInfo = {
       href: "/",
     },
     {
-      key: "About Us",
-      href: "/about/",
+      key: "Approach",
+      href: "/approach/",
     },
     {
-      key: "Services",
-      href: "/services/",
-      children: [
-        {
-          key: "Overview",
-          href: "/services/",
-        },
-        {
-          key: "Service 1",
-          href: "/services/service1/",
-        },
-        {
-          key: "Service 2",
-          href: "/services/service2/",
-        },
-      ],
+      key: "Startups",
+      href: "/startups/",
     },
     {
-      key: "News",
-      href: "/news/",
+      key: "Ecosystem",
+      href: "/ecosystem/",
     },
+
+    // {
+    //   key: "Services",
+    //   href: "/services/",
+    //   children: [
+    //     {
+    //       key: "Overview",
+    //       href: "/services/",
+    //     },
+    //     {
+    //       key: "Service 1",
+    //       href: "/services/service1/",
+    //     },
+    //     {
+    //       key: "Service 2",
+    //       href: "/services/service2/",
+    //     },
+    //   ],
+    // },
+    // {
+    //   key: "Perspectives",
+    //   href: "/perspectives/",
+    // },
     {
       key: "Contact",
       href: "/contact/",

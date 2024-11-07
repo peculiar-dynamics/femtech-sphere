@@ -1,5 +1,6 @@
 @import "./colors.css";
 @import "./fonts.css";
+@import "./forms.css";
 
 @tailwind base;
 @tailwind components;
@@ -186,7 +187,7 @@
     @apply text-[--primary] border  border-[--outline] rounded-md hover:bg-primary-400/[0.08];
   }
   .button.outlined-filled {
-    @apply bg-[--surface] text-[--primary] dark:bg-transparent border  border-[--outline] rounded-md hover:bg-primary-400/[0.08];
+    @apply bg-[--surface] text-[--primary] dark:bg-transparent dark:text-[--onPrimary] border  border-[--outline] rounded-md hover:bg-primary-400/[0.08];
   }
 
   .elevated.disabled,

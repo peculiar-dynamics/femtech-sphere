@@ -20,7 +20,7 @@ const {header, fontColors} = Astro.props
             <li
               class:list={[
                 "menu-item relative flex flex-col items-center justify-center  w-full",
-                { "has-dropdown": page?.children && page.children.length > 0 }
+                { "has-dropdown": page?.children && page.children.length > 0 }, fontColors
               ]}
               tabindex="-1"
             >
@@ -46,9 +46,9 @@ const {header, fontColors} = Astro.props
                                    
                 </button>
 
-                <ul id={`${page.key}_menu`} class:list={[ "hidden nav-drop-ul  sm:absolute flex-col sm:top-12  z-40 w-full min-w-64 sm:shadow-xl py-2 sm:mt-0 sm:py-4 ", "bg-[--surfaceContainer]" ]}  aria-label={`${page.key} menu`} aria-expanded="false" >
+                <ul id={`${page.key}_menu`} class:list={[ "hidden nav-drop-ul   sm:absolute flex-col sm:top-12  z-40 w-full min-w-64 sm:shadow-xl py-2 sm:mt-0 sm:py-4 ", "bg-[--surfaceContainer] " ]}  aria-label={`${page.key} menu`} aria-expanded="false" >
                   {page.children.map((child) => (
-                    <li class="submenu-item  flex w-full "  >
+                    <li class:list={["submenu-item  flex w-full "]}  >
                       <a href={child.href} class="nav-li-link nav-drop-link w-full px-3 py-2" tabindex="0">
                         {child.key}
                       </a>
